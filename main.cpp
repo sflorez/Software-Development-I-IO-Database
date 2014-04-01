@@ -1,5 +1,4 @@
 #include<iostream>
-using namespace;
 
 // testing commits from eclipse
 
