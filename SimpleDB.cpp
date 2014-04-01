@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include "SimpleDB.h"
 using namespace std;
 
 class SimpleDB
@@ -9,7 +10,7 @@ class SimpleDB
 	 *
 	 * @params: keyfile and datafile
 	 */
-	SimpleBD::SimpleBD( const string & keyFile , const string & dataFile)
+	SimpleDB::SimpleDB( const string & keyFile , const string & dataFile)
 	{
 		ofstream myKeyFile;
 		ofstream myDataFile;
