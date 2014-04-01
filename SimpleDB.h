@@ -42,12 +42,11 @@ class SimpleDB
          * The failed error number and message may be accessed using
          * errorNum() and errorMessage() thereafter.
          */
-        void create(const char* db, const char* user, const char* password);
-
+        void create(const char* db, const char* user, const char* password, const int shift);
         /**
          * Connect to existing database with given name and credentials.
          *
-         * Throws a DBException with proper message when fails.
+         * Throws a DBException with proper message when fails./
          * The failed error number and message may be accessed using
          * errorNum() and errorMessage() thereafter.
          */
