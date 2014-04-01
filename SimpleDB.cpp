@@ -24,3 +24,21 @@ SimpleDB::SimpleDB( const string & keyFile , const string & dataFile)
 	}
 
 SimpleDB::~SimpleDB(){}
+
+void SimpleDB::create( const char* db, const char* user, const char* password, const int shift)
+{
+	const char* dataBase = db;
+	const char* username = user;
+	const char* pass = password;
+	int numKeys = 0;
+
+	ofstream myDataBase;
+
+	myDataBase.open( keyFileName, ios:: out);
+	myDataBase << dataBase << ", " << username << ", " << pass << ", " << shift << endl;
+	myDataBase << numKeys << endl;
+
+	myDataBase.close();
+
+
+}
