@@ -7,7 +7,7 @@ int main()
     const std::string key = "keyFile";
     const std::string database = "DatabaseFile";
     
-    SimpleDB simpleDB(& key, & database);
+    SimpleDB simpleDB( key, database);
     return 0;
 }
 
