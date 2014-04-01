@@ -17,11 +17,8 @@ SimpleDB::SimpleDB( const string & keyFile , const string & dataFile)
 			const char* keyFileName = keyFile.c_str();
 			const char* dataFileName = dataFile.c_str();
 
-
 			myKeyFile.open( keyFileName);
-			myKeyFile << "hello" << endl;
 			myDataFile.open( dataFileName);
-			myDataFile << "the other stuff" << endl;
 			myKeyFile.close();
 			myDataFile.close();
 	}
