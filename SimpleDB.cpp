@@ -1,26 +1,26 @@
 #include <iostream>
 #include <fstream>
 #include "SimpleDB.h"
+#include <cstring>
 using namespace std;
 
-class SimpleDB
-{
 	/*The constructor for the SimpleDB class, creates a keyfile and
 	 * datafile for the database.
 	 *
 	 * @params: keyfile and datafile
 	 */
-	SimpleDB::SimpleDB( const string & keyFile , const string & dataFile)
+SimpleDB::SimpleDB( const string & keyFile , const string & dataFile)
 	{
 		ofstream myKeyFile;
 		ofstream myDataFile;
 
-		string keyFileName = keyFile + ".txt";
-		string dataFileName = dataFile + ".txt";
+		const char* keyFileName = keyFile.c_str();
+		const char* dataFileName = dataFile.c_str();
 
 		myKeyFile.open( keyFileName);
 		myDataFile.open( dataFileName);
 		myKeyFile.close();
 		myDataFile.close();
 	}
-};
+
+SimpleDB::~SimpleDB(){}

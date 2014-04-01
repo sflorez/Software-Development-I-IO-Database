@@ -6,6 +6,7 @@
 
 #ifndef SIMPLEDB_H
 #define SIMPLEDB_H
+#include <cstring>
 
 class SimpleDB
 {
@@ -23,7 +24,7 @@ class SimpleDB
          * Constructor to create (if the files do not exist) or use
          * (if they do) the database key and data files.
          */
-        SimpleDB(const string &keyFile, const string &dataFile);
+        SimpleDB(const std::string &keyFile, const std::string &dataFile);
 
         /**
          * Destructor to destroy any pointer memory allocated
@@ -90,7 +91,7 @@ class SimpleDB
          * @return error code.
          *
          */
-        const string & errorMessage();
+        const std::string & errorMessage();
 
         /**
          * Key access to determine if the entered key exists for
