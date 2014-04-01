@@ -4,8 +4,10 @@
 
 int main()
 {
+    const std::string key = "keyFile";
+    const std::string database = "DatabaseFile";
     
-    SimpleDB simpleDB(const std::string & key, const std::string & database);
+    SimpleDB simpleDB(& key, & database);
     return 0;
 }
 
