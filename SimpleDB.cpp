@@ -2,7 +2,11 @@
 #include <fstream>
 #include "SimpleDB.h"
 #include <cstring>
+#include <vector>
 using namespace std;
+
+const char* keyFileName;
+const char* dataFileName;
 
 	/*The constructor for the SimpleDB class, creates a keyfile and
 	 * datafile for the database.
@@ -11,16 +15,17 @@ using namespace std;
 	 */
 SimpleDB::SimpleDB( const string & keyFile , const string & dataFile)
 	{
-	ofstream myKeyFile;
-			ofstream myDataFile;
+		fstream myKeyFile;
+		fstream myDataFile;
 
-			const char* keyFileName = keyFile.c_str();
-			const char* dataFileName = dataFile.c_str();
+		keyFileName = keyFile.c_str();
+		dataFileName = dataFile.c_str();
 
-			myKeyFile.open( keyFileName);
-			myDataFile.open( dataFileName);
-			myKeyFile.close();
-			myDataFile.close();
+
+		myKeyFile.open( keyFileName);
+		myDataFile.open( dataFileName);
+		myKeyFile.close();
+		myDataFile.close();
 	}
 
 SimpleDB::~SimpleDB(){}
@@ -32,7 +37,7 @@ void SimpleDB::create( const char* db, const char* user, const char* password, c
 	const char* pass = password;
 	int numKeys = 0;
 
-	ofstream myDataBase;
+	fstream myDataBase;
 
 	myDataBase.open( keyFileName, ios:: out);
 	myDataBase << dataBase << ", " << username << ", " << pass << ", " << shift << endl;
