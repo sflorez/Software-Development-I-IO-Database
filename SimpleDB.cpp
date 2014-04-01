@@ -11,16 +11,19 @@ using namespace std;
 	 */
 SimpleDB::SimpleDB( const string & keyFile , const string & dataFile)
 	{
-		ofstream myKeyFile;
-		ofstream myDataFile;
+	ofstream myKeyFile;
+			ofstream myDataFile;
 
-		const char* keyFileName = keyFile.c_str();
-		const char* dataFileName = dataFile.c_str();
+			const char* keyFileName = keyFile.c_str();
+			const char* dataFileName = dataFile.c_str();
 
-		myKeyFile.open( keyFileName);
-		myDataFile.open( dataFileName);
-		myKeyFile.close();
-		myDataFile.close();
+
+			myKeyFile.open( keyFileName);
+			myKeyFile << "hello" << endl;
+			myDataFile.open( dataFileName);
+			myDataFile << "the other stuff" << endl;
+			myKeyFile.close();
+			myDataFile.close();
 	}
 
 SimpleDB::~SimpleDB(){}
