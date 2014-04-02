@@ -124,6 +124,7 @@ void SimpleDB::synchronize()
 void SimpleDB::close()
 {
 	//stub for the close method should close out of the current database
+	syncronize(); 
 	connected = false;
 }
 
