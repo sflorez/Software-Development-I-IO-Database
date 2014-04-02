@@ -42,3 +42,57 @@ void SimpleDB::create( const char* db, const char* user, const char* password, c
 
 
 }
+
+void SimpleDB::connect(const char* db, const char* user, const char* password)
+{
+	// stub for the connect method, should try to connect to an existing database within the
+	// keyfile
+}
+
+void SimpleDB::synchronize()
+{
+	//stub for the synchornize method
+}
+
+void SimpleDB::close()
+{
+	//stub for the close method should close out of the current database
+}
+
+int SimpleDB::errorNum()
+{
+	// stub for the errorNum method
+	return 0;
+}
+
+const string & SimpleDB::errorMessage()
+{
+	return NULL;
+}
+
+bool SimpleDB::keyExists( const char* key)
+{
+	return false;
+	//stub for the keyExists method
+}
+
+const char* SimpleDB::select(const char* key)
+{
+	return NULL;
+	//stub for the select method
+}
+
+bool SimpleDB::update( const char *key, const char *value)
+{
+	return false;
+}
+
+bool SimpleDB::insert(const char* key , const char* value)
+{
+	return false;
+}
+
+bool SimpleDB::remove(const char* key)
+{
+	return false;
+}
