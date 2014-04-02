@@ -27,9 +27,9 @@ int main()
 	    dataBaseUser = tempUser.c_str();
 	    dataBasePass = tempPass.c_str();
 
-	    simpleDB.create(dataBaseName, dataBaseUser, dataBasePass, shift);
+//	    simpleDB.create(dataBaseName, dataBaseUser, dataBasePass, shift);
 
-	    simpleDB.connect(dataBaseName, dataBaseUser, dataBasePass);
+//	    simpleDB.connect(dataBaseName, dataBaseUser, dataBasePass);
 
 
 

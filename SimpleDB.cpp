@@ -7,6 +7,9 @@ using namespace std;
 
 const char* keyFileName;
 const char* dataFileName;
+const char* keyFileInUse;
+const char* dataFileInUse;
+const char* dataBaseInUse;
 bool connected;
 
 	/*The constructor for the SimpleDB class, creates a keyfile and
@@ -19,8 +22,32 @@ SimpleDB::SimpleDB( const string & keyFile , const string & dataFile)
 		keyFileName = keyFile.c_str();
 		dataFileName = dataFile.c_str();
 
-		ofstream myKeyFile(keyFileName);
-		ofstream myDataFile(dataFileName);
+
+		ifstream file(keyFileName);
+		if(!file) // the file was not found so create it.
+		{
+			ofstream myKeyFile(keyFileName);
+			keyFileInUse = keyFileName;
+			myKeyFile.close();
+		}
+		else   //if the file was found, use existing file
+		{
+			cout << " file already exists: Using the existing keyfile" << endl;
+			keyFileInUse = keyFileName;
+		}
+
+		ifstream file2(dataFileName);
+		if(!file) // the file was not found so create it.
+		{
+			ofstream myDataFile(dataFileName);
+			dataFileInUse = dataFileName;
+			myDataFile.close();
+		}
+		else   //if the file was found, use existing file
+		{
+			cout << " file already exists: Using the existing datafile" << endl;
+			dataFileInUse = dataFileName;
+		}
 
 	}
 
@@ -30,9 +57,9 @@ void SimpleDB::create( const char* db, const char* user, const char* password, c
 {
 	int numKeys = 0;
 
-	fstream myDataBase;
+	ofstream myDataBase;
 
-	myDataBase.open( keyFileName, ios:: out | ios:: in | ios:: app);
+	myDataBase.open( keyFileInUse, ios:: out | ios:: in | ios:: app);
 	myDataBase << db << " " <<  user << " " <<  password << " " <<  shift << endl;
 	myDataBase << numKeys << endl;
 
@@ -43,7 +70,7 @@ void SimpleDB::connect(const char* db, const char* user, const char* password)
 {
 	// stub for the connect method, should try to connect to an existing database within the
 	// keyfile
-	fstream myDataBase(keyFileName, ios:: out | ios::in);
+	fstream myDataBase(keyFileInUse, ios:: out | ios::in);
 	string targetDB;
 	const char* userName;
 	string targetName;
@@ -62,7 +89,7 @@ void SimpleDB::connect(const char* db, const char* user, const char* password)
 			myDataBase >> targetName >> targetPass;
 			cout << "Database found please enter credentials" << endl;
 			cout << "Please enter the username and password of the database"
-					"seperated by a space" << endl;
+					" seperated by a space" << endl;
 			cin >> tempName >> tempPass;
 			userName = tempName.c_str();
 			userPass = tempPass.c_str();
@@ -70,6 +97,7 @@ void SimpleDB::connect(const char* db, const char* user, const char* password)
 			if( userName == targetName && userPass == targetPass)
 			{
 				cout << "Successfully accessed the database" << endl;
+				dataBaseInUse = db;
 				connected = true;
 				break;
 			}
@@ -96,6 +124,7 @@ void SimpleDB::synchronize()
 void SimpleDB::close()
 {
 	//stub for the close method should close out of the current database
+	syncronize(); 
 	connected = false;
 }
 
@@ -129,10 +158,34 @@ bool SimpleDB::update( const char *key, const char *value)
 
 bool SimpleDB::insert(const char* key , const char* value)
 {
-	return false;
+	string targetDB;
+
+	if(!connected)
+	{
+		return false;
+	}
+	else
+	{
+		fstream myDataBase(keyFileInUse, ios:: out | ios::in);
+		myDataBase.seekg(ios::beg);
+
+		while(!myDataBase.eof())
+		{
+			myDataBase >> targetDB;
+			if( dataBaseInUse == targetDB)
+			{
+				//add the key
+			}
+		}
+
+	}
+
 }
 
 bool SimpleDB::remove(const char* key)
 {
 	return false;
 }
+
+
+
