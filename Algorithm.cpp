@@ -23,7 +23,7 @@ static int add(int a, int b){return a+b;}
 
 bool encrypt(char* data, int shift)
 {
-	
+	int *asciiVal = (int)*data;	
 }
 
 bool decrypt(char* data, int shift)
