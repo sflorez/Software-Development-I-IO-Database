@@ -5,6 +5,34 @@
  */
 
 #include<iostream>
-#include<fstream>
-#include "algorithm.h"
+#include "Algorithm.h"
+using namespace Algorithm;
+
+/*
+ * constructor uses Caesar encryption with
+ * ASCII values 32-126
+ *
+ *   
+ */
+Algorithm()
+{
+	
+}
+
+static int add(int a, int b){return a+b;}
+
+bool encrypt(char* data, int shift)
+{
+	
+}
+
+bool decrypt(char* data, int shift)
+{
+
+}
+
+~Algorithm()
+{
+
+}
 
