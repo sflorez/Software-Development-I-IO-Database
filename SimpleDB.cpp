@@ -31,7 +31,7 @@ void SimpleDB::create( const char* db, const char* user, const char* password, c
 
 		fstream myDataBase;
 
-		myDataBase.open( keyFileName, ios:: out);
+		myDataBase.open( keyFileName, ios:: out | ios:: app);
 		myDataBase << db << ", " << user << ", " << password << ", " << shift << endl;
 		myDataBase << numKeys << endl;
 
