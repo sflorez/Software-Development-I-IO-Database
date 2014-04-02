@@ -1,5 +1,16 @@
+#include 'Key.h'
 #include <vector>
 
-void mergeSort(vector<int> &keyVector)
+void merge()
 {
+
+}
+void mergeSort(vector<Key> &keyVector)
+{
+	int sortLow, sortMid, sortHigh;
+	sortLow = 0;
+	sortHigh = keyVector.size();
+	sortMid = sortHigh / 2;
+
+
 }
