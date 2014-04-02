@@ -27,18 +27,13 @@ SimpleDB::~SimpleDB(){}
 
 void SimpleDB::create( const char* db, const char* user, const char* password, const int shift)
 {
-	const char* dataBase = db;
-	const char* username = user;
-	const char* pass = password;
 	int numKeys = 0;
 
-	fstream myDataBase;
+		fstream myDataBase;
 
-	myDataBase.open( keyFileName, ios:: out);
-	myDataBase << dataBase << ", " << username << ", " << pass << ", " << shift << endl;
-	myDataBase << numKeys << endl;
-
-	myDataBase.close();
+		myDataBase.open( keyFileName, ios:: out);
+		myDataBase << db << ", " << user << ", " << password << ", " << shift << endl;
+		myDataBase << numKeys << endl;
 
 
 }
