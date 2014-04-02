@@ -17,7 +17,7 @@ void merge();
 /*
 *	Member function to sort the vector of keys for the current database
 */
-void mergeSort();
+void mergeSort(vector<int> &keyVector);
 
 /*
 *	Member function to search through the sorted vector of keys by their ASCII value, and 
