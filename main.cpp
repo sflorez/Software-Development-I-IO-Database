@@ -1,14 +1,15 @@
 #include<iostream>
 #include "SimpleDB.h"
+#include <string>
+using namespace std;
 // testing commits from eclipse
 
 int main()
 {
-    const std::string key = "keyFile";
-    const std::string database = "DatabaseFile";
-    
-    SimpleDB simpleDB( key, database);
-    return 0;
-}
+	    const string &key = "keyFile";
+	    const string &database = "DataFile";
 
+	    SimpleDB simpleDB( key, database);
+	    return 0;
+}
 

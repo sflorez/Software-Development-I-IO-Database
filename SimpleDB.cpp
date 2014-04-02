@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "SimpleDB.h"
-#include <cstring>
+#include <string>
 #include <vector>
 using namespace std;
 
@@ -15,17 +15,12 @@ const char* dataFileName;
 	 */
 SimpleDB::SimpleDB( const string & keyFile , const string & dataFile)
 	{
-		fstream myKeyFile;
-		fstream myDataFile;
-
 		keyFileName = keyFile.c_str();
 		dataFileName = dataFile.c_str();
 
+		ofstream myKeyFile(keyFileName);
+		ofstream myDataFile(dataFileName);
 
-		myKeyFile.open( keyFileName);
-		myDataFile.open( dataFileName);
-		myKeyFile.close();
-		myDataFile.close();
 	}
 
 SimpleDB::~SimpleDB(){}
