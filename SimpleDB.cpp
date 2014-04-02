@@ -11,6 +11,7 @@ const char* keyFileInUse;
 const char* dataFileInUse;
 const char* dataBaseInUse;
 bool connected;
+int errorNum;
 
 	/*The constructor for the SimpleDB class, creates a keyfile and
 	 * datafile for the database.
@@ -19,6 +20,7 @@ bool connected;
 	 */
 SimpleDB::SimpleDB( const string & keyFile , const string & dataFile)
 	{
+		errorNum = 0;
 		keyFileName = keyFile.c_str();
 		dataFileName = dataFile.c_str();
 
@@ -131,7 +133,7 @@ void SimpleDB::close()
 int SimpleDB::errorNum()
 {
 	// stub for the errorNum method
-	return 0;
+	return errorNum;
 }
 
 const string & SimpleDB::errorMessage()

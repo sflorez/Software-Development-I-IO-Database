@@ -4,8 +4,18 @@
 class Algorithm
 {
 	private:
-		Algorithm(){}
+		Algorithm()
+	private:
+		bool encrypt(char* data, int shift);
+	private:
+		bool decrypt(char* data, int shift);
+
 	public:
-		static int add(int a, int b) {return a+b;}	
+		static int add(int a, int b);
+	public:
+	virtual ~Algorithm();
+	
+
 };
+
 #endif
