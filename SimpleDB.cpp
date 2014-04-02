@@ -7,6 +7,7 @@ using namespace std;
 
 const char* keyFileName;
 const char* dataFileName;
+bool connected;
 
 	/*The constructor for the SimpleDB class, creates a keyfile and
 	 * datafile for the database.
@@ -29,19 +30,62 @@ void SimpleDB::create( const char* db, const char* user, const char* password, c
 {
 	int numKeys = 0;
 
-		fstream myDataBase;
+	fstream myDataBase;
 
-		myDataBase.open( keyFileName, ios:: out | ios:: app);
-		myDataBase << db << ", " << user << ", " << password << ", " << shift << endl;
-		myDataBase << numKeys << endl;
+	myDataBase.open( keyFileName, ios:: out | ios:: in | ios:: app);
+	myDataBase << db << " " <<  user << " " <<  password << " " <<  shift << endl;
+	myDataBase << numKeys << endl;
 
-
+	myDataBase.close();
 }
 
 void SimpleDB::connect(const char* db, const char* user, const char* password)
 {
 	// stub for the connect method, should try to connect to an existing database within the
 	// keyfile
+	fstream myDataBase(keyFileName, ios:: out | ios::in);
+	string targetDB;
+	const char* userName;
+	string targetName;
+	string targetPass;
+	const char* userPass;
+	string tempName;
+	string tempPass;
+
+	myDataBase.seekg(ios::beg);
+
+	while(!myDataBase.eof())
+	{
+		myDataBase >> targetDB;
+		if( db == targetDB)
+		{
+			myDataBase >> targetName >> targetPass;
+			cout << "Database found please enter credentials" << endl;
+			cout << "Please enter the username and password of the database"
+					"seperated by a space" << endl;
+			cin >> tempName >> tempPass;
+			userName = tempName.c_str();
+			userPass = tempPass.c_str();
+
+			if( userName == targetName && userPass == targetPass)
+			{
+				cout << "Successfully accessed the database" << endl;
+				connected = true;
+				break;
+			}
+			else
+			{
+				cout << "Incorrect username or password" << endl;
+				break;
+			}
+
+		}
+		else
+		{
+			cout << "could not find the database" << endl;
+		}
+	}
+
 }
 
 void SimpleDB::synchronize()
@@ -52,6 +96,7 @@ void SimpleDB::synchronize()
 void SimpleDB::close()
 {
 	//stub for the close method should close out of the current database
+	connected = false;
 }
 
 int SimpleDB::errorNum()
