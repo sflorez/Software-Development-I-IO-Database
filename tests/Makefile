@@ -17,7 +17,7 @@
 GTEST_DIR = /opt/gtest-1.7.0/
 
 # Where to find user code.
-USER_DIR = .
+USER_DIR = ./main.cpp SimpleDB.cpp SimpleDB.h  
 
 # Flags passed to the preprocessor.
 # Set Google Test's header directory as a system directory, such that
@@ -71,11 +71,11 @@ gtest_main.a : gtest-all.o gtest_main.o
 # gtest_main.a, depending on whether it defines its own main()
 # function.
 
-sample1.o : $(USER_DIR)/SampleDB.cpp  $(USER_DIR)/SampleDB.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/SampleDB.cpp
+sample1.o : $(USER_DIR) $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)
 
-sample1_unittest.o : $(USER_DIR)/sample_unittest.cc $(USER_DIR)/SampleDB.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/sample_unittest.cc
+sample1_unittest.o : $(USER_DIR)  $(GTEST_HEADERS)
+	g(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)
 
 sample1_unittest : sample1.o sample1_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@

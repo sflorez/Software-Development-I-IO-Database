@@ -6,9 +6,17 @@
 using namespace std;
 
 
+/**
+ * Test Fixtures
+ * 
+ */ 
 class SimpleDBTest : public testing::Test 
 {
     protected:
+        
+        /**
+         * Helper method
+         */ 
         
         void ConstructorTester( const string &keyFile, const string &dataFile )
         {
@@ -28,6 +36,9 @@ class SimpleDBTest : public testing::Test
 };
 
 
+/**
+ * Uses the test fixture to test the "constructorTester"
+ */
 TEST_F(SimpleDBTest, isFileThere)
 {
     const string &key = "keyFile";
