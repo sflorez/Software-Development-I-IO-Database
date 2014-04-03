@@ -174,6 +174,8 @@ bool SimpleDB::insert(const char* key , const char* value)
 			myDataBase >> targetDB;
 			if( dataBaseInUse == targetDB)
 			{
+				string numKeys;
+
 				//add the key
 			}
 		}

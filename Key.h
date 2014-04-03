@@ -8,12 +8,9 @@
 #ifndef KEY_H_
 #define KEY_H_
 
-#include <cstring>
-using namespace std;
-
 class Key {
 public:
-	Key( const char* key, const int pos, const int length );
+	Key( const char* key, int pos, int length );
 
 	/*
 	 * Return the key of the key object.
@@ -40,7 +37,7 @@ public:
 	 *
 	 * @params the position
 	 */
-	void setPos( const int pos);
+	void setPos( int pos);
 
 	/*
 	 * Retrieve the length associated with this key for access to the datafile
@@ -54,7 +51,7 @@ public:
 	 *
 	 * @params the length
 	 */
-	void setLength(const int length);
+	void setLength( int length);
 
 	/*
 	 * Helper function to be used when merging the keys and searching for the keys by the
