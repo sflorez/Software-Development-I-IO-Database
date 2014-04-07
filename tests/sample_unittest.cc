@@ -25,8 +25,8 @@ class SimpleDBTest : public testing::Test
             ifstream file(keyFileName);
             ifstream file2(dataFileName);
             
-            ASSERT_FALSE(file);
-            ASSERT_FALSE(file2);
+            ASSERT_TRUE(file);
+            ASSERT_TRUE(file2);
             
             SimpleDB::SimpleDB simpleDB( keyFile, dataFile );
             
