@@ -63,6 +63,15 @@ class SimpleDBTest : public testing::Test
         //{
            
        //}
+       //
+        void InsertTest( const char* key , const char* value )
+        {
+            const char* keyFile = "keyFile";
+            const char* dataFile = "dataFile";
+            SimpleDB simpleDB( keyFile, dataFile);
+            simpleDB.insert( db, user, password, shift );
+                                           
+        }
 };
 
 
