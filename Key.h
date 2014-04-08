@@ -2,7 +2,7 @@
  * Key.h
  *
  *  Created on: Apr 2, 2014
- *      Author: Sebass
+ *
  */
 
 #ifndef KEY_H_
@@ -51,7 +51,7 @@ public:
 	 *
 	 * @params the length
 	 */
-	void setLength( int length);
+	void setLength(int length);
 
 	/*
 	 * Helper function to be used when merging the keys and searching for the keys by the

@@ -10,15 +10,14 @@
 using namespace std;
 
 const char* keyName;
-const char* position;
-const int lengthOfData;
+int position;
+int lengthOfData;
 
-Key::Key( const char* key, const int pos, const int length  )
+Key::Key( const char* key, int pos, int length  )
 {
 	setKey(key);
 	setPos(pos);
 	setLength(length);
-
 }
 
 const char* Key::getKey()
@@ -36,7 +35,7 @@ const int Key::getPos()
 	return position;
 }
 
-void Key::setPos( const int pos)
+void Key::setPos( int pos)
 {
 	position = pos;
 }
@@ -46,7 +45,7 @@ const int Key::getLength()
 	return lengthOfData;
 }
 
-void Key::setLength( const int length)
+void Key::setLength(int length)
 {
 	lengthOfData = length;
 }

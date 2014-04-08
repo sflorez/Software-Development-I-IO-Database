@@ -3,15 +3,17 @@
 #include "SimpleDB.h"
 #include <string>
 #include <vector>
+#include <stdlib.h>
+#include "Key.h"
 using namespace std;
 
-const char* keyFileName;
-const char* dataFileName;
-const char* keyFileInUse;
-const char* dataFileInUse;
-const char* dataBaseInUse;
-bool connected;
-int errorNum;
+	const char* keyFileName;
+	const char* dataFileName;
+	const char* keyFileInUse;
+	const char* dataFileInUse;
+	const char* dataBaseInUse;
+	bool connected;
+	vector<Key*> theKeys;
 
 	/*The constructor for the SimpleDB class, creates a keyfile and
 	 * datafile for the database.
@@ -20,9 +22,11 @@ int errorNum;
 	 */
 SimpleDB::SimpleDB( const string & keyFile , const string & dataFile)
 	{
-		errorNum = 0;
 		keyFileName = keyFile.c_str();
 		dataFileName = dataFile.c_str();
+		dataFileInUse = "";
+		dataBaseInUse = "";
+		connected = false;
 
 
 		ifstream file(keyFileName);
@@ -101,6 +105,29 @@ void SimpleDB::connect(const char* db, const char* user, const char* password)
 				cout << "Successfully accessed the database" << endl;
 				dataBaseInUse = db;
 				connected = true;
+				int numKeys;
+				string tempKey;
+				const char* key;
+				int tempPos = 0;
+				int tempLength = 0;
+				getline( myDataBase, tempKey);
+				myDataBase >> numKeys;
+				cout << numKeys << endl;
+				if( numKeys == 0 )
+				{
+					cout << "No keys in database" << endl;
+				}
+				else
+				{
+					for( int i = 0; i < numKeys; i ++)
+					{
+						myDataBase >> tempKey >> tempPos >> tempLength;
+						key = tempKey.c_str();
+						cout << key << endl;
+						theKeys.push_back(new Key( key, tempPos, tempLength));
+					}
+
+				}
 				break;
 			}
 			else
@@ -126,14 +153,14 @@ void SimpleDB::synchronize()
 void SimpleDB::close()
 {
 	//stub for the close method should close out of the current database
-	syncronize(); 
+	synchronize();
 	connected = false;
 }
 
 int SimpleDB::errorNum()
 {
 	// stub for the errorNum method
-	return errorNum;
+	return 0;
 }
 
 const string & SimpleDB::errorMessage()
@@ -176,11 +203,46 @@ bool SimpleDB::insert(const char* key , const char* value)
 			myDataBase >> targetDB;
 			if( dataBaseInUse == targetDB)
 			{
-				string numKeys;
-
 				//add the key
+				string numKeys;
+				getline(myDataBase, numKeys);
+				getline(myDataBase, numKeys);
+				cout << numKeys << endl;
+				int num = atoi(numKeys.c_str());
+				cout << num << endl;
+				int numToSeek = num + 3;
+				if( num == 0)
+				{
+					cout << " in if" << endl;
+					myDataBase.seekp(-numToSeek, ios::cur);
+					int currentpos = myDataBase.tellp();
+					myDataBase << (num+1) << endl;
+					myDataBase.seekp(currentpos);
+					getline(myDataBase, numKeys);
+					myDataBase << key << " "<< 0 << " "<< 5 << endl;
+
+					myDataBase.close();
+					break;
+				}
+				else
+				{
+//					cout << " in else " << endl;
+				myDataBase.seekp(-numToSeek, ios::cur);
+				int currentpos = myDataBase.tellp();
+				myDataBase << (num+1) << endl;
+				myDataBase.seekp(currentpos);
+				getline(myDataBase, numKeys);
+					for( int i = 0 ; i < num ; i++)
+					{
+						getline(myDataBase, numKeys);
+					}
+					myDataBase << key <<" " <<  0 << " " << 5 << endl;
+					break;
+				}
 			}
 		}
+
+		return true;
 
 	}
 
