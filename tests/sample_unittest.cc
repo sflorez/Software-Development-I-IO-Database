@@ -1,5 +1,6 @@
 #include <limits.h>
 #include "SimpleDB.h"
+#include "Key.h"
 #include <iostream>
 #include <fstream>
 #include "gtest/gtest.h"
@@ -38,7 +39,15 @@ class SimpleDBTest : public testing::Test
          */ 
         void CreateTest( const char* db, const char* user, const char* password, const int shift )
         {
+            SimpleDB::create create( db, user, password, shift ); 
             
+            string inFile = "keyFile";
+                        
+            string buffer;
+            ifstream keyFile;
+            keyFile.open(inFile.c_str(), ios::in);
+            keyFile.getline(db, buffer);
+            ASSERT_TRUE(keyFile);             
         }
         
         /**
@@ -46,10 +55,10 @@ class SimpleDBTest : public testing::Test
          * 
          * @params: db, user, password
          */ 
-        void ConnectTest(const char* db, const char* user, const char* password)
-        {
+        //void ConnectTest(const char* db, const char* user, const char* password)
+        //{
            
-        }
+       //}
 };
 
 
@@ -67,21 +76,26 @@ TEST_F(SimpleDBTest, ConstructorTest)
 /**
  * Calls the "CreateTest" in the fixture
  */
+
+
 TEST_F(SimpleDBTest, CreateTest)
 {
     const string &db = "TestDataBase";
     const string &userName = "TestUserName";
     const string &passwordName = "TestPassword";    
-    const int &shift = 4;
+    const int shift = 4;
    
     const char* dataBase = db.c_str();
     const char* user = userName.c_str();
     const char* password = passwordName.c_str();
+    CreateTest( db, userName, passwordName, shift);
 }
 
 /**
  * Callsed the "ConnectTest" in the fixture
  */
+
+/**
 TEST_F(SimpleDBTest, ConnectTest)
 {
     const string &db = "Database";
@@ -92,3 +106,4 @@ TEST_F(SimpleDBTest, ConnectTest)
     const char* user = userName.c_str();
     const char* password = passwordName.c_str();
 }
+*/

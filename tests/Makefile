@@ -71,10 +71,10 @@ gtest_main.a : gtest-all.o gtest_main.o
 # gtest_main.a, depending on whether it defines its own main()
 # function.
 
-SimpleDB.o : $(USER_DIR)/SimpleDB.cpp $(USER_DIR)/SimpleDB.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/SimpleDB.cpp
+SimpleDB.o : $(USER_DIR)/SimpleDB.cpp $(USER_DIR)/Key.cpp $(USER_DIR)/SimpleDB.h $(USER_DIR)/Key.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/SimpleDB.cpp $(USER_DIR)/Key.cpp
 
-sample_unittest.o : $(USER_DIR)/sample_unittest.cc $(USER_DIR)/SimpleDB.h $(GTEST_HEADERS)
+sample_unittest.o : $(USER_DIR)/sample_unittest.cc $(USER_DIR)/SimpleDB.h $(USER_DIR)/Key.h $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/sample_unittest.cc
 	
 sample_unittest : SimpleDB.o sample_unittest.o gtest_main.a
