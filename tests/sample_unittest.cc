@@ -24,7 +24,7 @@ class SimpleDBTest : public testing::Test
         {
             const char* keyFileName = keyFile.c_str();
             const char* dataFileName = dataFile.c_str();
-            SimpleDB::SimpleDB simpleDB( keyFileName, dataFileName );
+            SimpleDB simpleDB( keyFileName, dataFileName );
             ifstream file(keyFileName);
             ifstream file1(dataFileName);
   
@@ -39,15 +39,19 @@ class SimpleDBTest : public testing::Test
          */ 
         void CreateTest( const char* db, const char* user, const char* password, const int shift )
         {
-            SimpleDB::create create( db, user, password, shift ); 
-            
-            string inFile = "keyFile";
+            const char* keyFile = "keyFile";
+            const char* dataFile = "dataFile"; 
+            SimpleDB simpleDB( keyFile, dataFile);
+            simpleDB.create( db, user, password, shift );
+                   
+            string correct = "TestDataBase TestUserName TestPassword 4"; 
                         
             string buffer;
-            ifstream keyFile;
-            keyFile.open(inFile.c_str(), ios::in);
-            keyFile.getline(db, buffer);
-            ASSERT_TRUE(keyFile);             
+            ifstream file;
+            file.open(keyFile, ios::in);
+            getline(file, buffer);
+            
+            ASSERT_EQ(correct, buffer);             
         }
         
         /**
@@ -88,7 +92,7 @@ TEST_F(SimpleDBTest, CreateTest)
     const char* dataBase = db.c_str();
     const char* user = userName.c_str();
     const char* password = passwordName.c_str();
-    CreateTest( db, userName, passwordName, shift);
+    CreateTest( dataBase, user, password, shift);
 }
 
 /**
