@@ -2,6 +2,23 @@
 #include <vector>
 
 /*
+ * Basic function to take in the saved key as a string, and convert it into a cumulative ASCII value
+ * Returns the total value of the string in ASCII 
+*/
+int asciiConvert(string iKey)
+{
+	int keyVal = 0;
+
+	for (int i = 0; i < iKey.length(); i++)
+	{
+		char keyPart = iKey.at(i);
+		keyVal += static_cast<int>(keyPart);
+	}
+
+	return keyVal;
+}
+
+/*
  * Called in mergeSort()
  * Stores values from the vector containing the keys into a temporary storage vector as the 
  *		keys are ordered.
@@ -16,7 +33,7 @@ void merge(vector<Key> &iKeyVector, int iLow, int iMid, int iHigh, vector<Key> &
 
 	while ((left <= iMid) && (right <= iHigh))
 	{
-		if (iKeyVector[left] < iKeyVector[right])
+		if (asciiConvert(iKeyVector[left]) < asciiConvert(iKeyVector[right]))
 		{
 			iTempStorage[temp++] = iKeyVector[left++];
 		}
@@ -41,6 +58,11 @@ void merge(vector<Key> &iKeyVector, int iLow, int iMid, int iHigh, vector<Key> &
 		iKeyVector[temp] = iTempStorage[temp];
 	}
 }
+
+/*
+ * mergeSort function. Requires a vector of keys, the beginning and end of the  segment (as an int to be used to reference the vector)
+ *		and a temporary vector for storage to merge the keys 
+*/
 void mergeSort(vector<Key> &iKeyVector, int iLow, int iHigh, vector<Key> &iTempStorage)
 {
 	int sortLow, sortMid, sortHigh;
