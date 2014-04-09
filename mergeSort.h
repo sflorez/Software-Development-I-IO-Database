@@ -13,12 +13,12 @@
 /*
 *	Member function that is called by mergeSort() to merge values 
 */
-void merge();
+void merge( vector<Key> &iKeyVector, int iLow, int iMid, int iHigh, vector<Key> &iTempStorage);
 
 /*
 *	Member function to sort the vector of keys for the current database
 */
-void mergeSort(vector<Key> &keyVector);
+void mergeSort(vector<Key> &iKeyVector, int iLow, int iHigh, vector<Key> &iTempStorage);
 
 /*
 *	Member function to search through the sorted vector of keys by their ASCII value, and 
