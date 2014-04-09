@@ -198,12 +198,13 @@ bool SimpleDB::insert(const char* key , const char* value)
 	{
 		fstream myDataBase(keyFileInUse, ios:: out | ios::in);
 		ofstream myTempFile("tempFile", ios :: out);
-		fstream myDataFile(dataFileInUse, ios:: out | ios:: in);
+		fstream myDataFile;
+		myDataFile.open(dataFileInUse, ios:: out | ios:: in | ios::app);
 
 		//find the next postion within the dataFile.
 		myDataFile.seekg(ios::end);
 		int position = myDataFile.tellg();
-		int length = sizeof(value);
+		int length = strlen(value);
 		string inbuf;
 		myDataBase.seekg(ios::beg);
 
@@ -225,7 +226,13 @@ bool SimpleDB::insert(const char* key , const char* value)
 
 		}
 
-		for ( int i = 0 ; i < sizeof(value) +1; i ++)
+		myTempFile.close();
+		myDataBase.close();
+
+		remove(keyFileInUse);
+		rename("tempFile" , keyFileInUse);
+
+		for ( unsigned int i = 0 ; i < strlen(value); i ++)
 		{
 			myDataFile << value[i] << endl;
 		}
@@ -238,7 +245,7 @@ bool SimpleDB::insert(const char* key , const char* value)
 
 
 
-bool SimpleDB::remove(const char* key)
+bool SimpleDB::removeKey(const char* key)
 {
 	return false;
 }
