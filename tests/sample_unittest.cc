@@ -69,7 +69,8 @@ class SimpleDBTest : public testing::Test
             const char* keyFile = "keyFile";
             const char* dataFile = "dataFile";
             SimpleDB simpleDB( keyFile, dataFile);
-            simpleDB.insert( db, user, password, shift );
+            ASSERT_TRUE(simpleDB.insert( key, value ));
+          
                                            
         }
 };
@@ -120,3 +121,10 @@ TEST_F(SimpleDBTest, ConnectTest)
     const char* password = passwordName.c_str();
 }
 */
+
+TEST_F(SimpleDBTest, InsertTest)
+{
+    const char* key = "key";
+    const char* value = "value";
+    InsertTest( key, value) ;
+}
