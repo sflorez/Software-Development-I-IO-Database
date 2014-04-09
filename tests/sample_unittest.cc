@@ -14,6 +14,13 @@ class SimpleDBTest : public testing::Test
 {
     protected:
         
+        const char* i_DatabaseFile = "dataFile";
+        const char* i_KeyFileName = "keyFile";
+        const char* i_db = "TestDataBase";
+        const char* i_user = "TestUserName";
+        const char* i_password = "TestPassword";
+        const int i_shift = 4;        
+        
         /**
          * Has the constructor create two files, keyFile and dataFile,
          * then tests if they are there
@@ -38,10 +45,8 @@ class SimpleDBTest : public testing::Test
          * @params: db, user, password, shift
          */ 
         void CreateTest( const char* db, const char* user, const char* password, const int shift )
-        {
-            const char* keyFile = "keyFile";
-            const char* dataFile = "dataFile"; 
-            SimpleDB simpleDB( keyFile, dataFile);
+        { 
+            SimpleDB simpleDB(i_KeyFilename, i_DatabaseFile);
             simpleDB.create( db, user, password, shift );
                    
             string correct = "TestDataBase TestUserName TestPassword 4"; 
@@ -66,9 +71,8 @@ class SimpleDBTest : public testing::Test
        //
         void InsertTest( const char* key , const char* value )
         {
-            const char* keyFile = "keyFile";
-            const char* dataFile = "dataFile";
-            SimpleDB simpleDB( keyFile, dataFile);
+            SimpleDB simpleDB( i_KeyFileName, i_DatabaseFile);
+            simpleDB.create(i_db, i_user, i_password, i_shift);            
             ASSERT_TRUE(simpleDB.insert( key, value ));                                           
         }
 };
@@ -92,14 +96,10 @@ TEST_F(SimpleDBTest, ConstructorTest)
 
 TEST_F(SimpleDBTest, CreateTest)
 {
-    const string &db = "TestDataBase";
-    const string &userName = "TestUserName";
-    const string &passwordName = "TestPassword";    
-    const int shift = 4;
-   
-    const char* dataBase = db.c_str();
-    const char* user = userName.c_str();
-    const char* password = passwordName.c_str();
+    const char* dataBase = "TestDataBase";
+    const char* user = "TestUserName";
+    const char* password = "TestPassword";
+    const in shift = 4;
     CreateTest( dataBase, user, password, shift);
 }
 
