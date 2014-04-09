@@ -8,7 +8,6 @@
 #define SIMPLEDB_H
 #include <string>
 
-
 class SimpleDB
 {
     public:
