@@ -146,7 +146,7 @@ class SimpleDB
          *
          * @return true for success, false for failure.
          */
-        bool remove(const char *key);
+        bool removeKey(const char *key);
 };
 
 #endif
