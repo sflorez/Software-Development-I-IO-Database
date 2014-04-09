@@ -69,9 +69,7 @@ class SimpleDBTest : public testing::Test
             const char* keyFile = "keyFile";
             const char* dataFile = "dataFile";
             SimpleDB simpleDB( keyFile, dataFile);
-            ASSERT_TRUE(simpleDB.insert( key, value ));
-          
-                                           
+            ASSERT_TRUE(simpleDB.insert( key, value ));                                           
         }
 };
 
