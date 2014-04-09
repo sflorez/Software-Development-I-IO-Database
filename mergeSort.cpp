@@ -2,20 +2,39 @@
 #include <vector>
 
 /*
- * Basic function to take in the saved key as a string, and convert it into a cumulative ASCII value
- * Returns the total value of the string in ASCII 
+ * Compares two keys character by character. If it detects any character difference, 
+ * it computes the difference and determines which string should occur first in alphabetical
+ * order. 
+ * If the strings are equivalent up until a point where one string is longer than the other, 
+ * the longer string will return a larger value.
+ * A return of -1 means the object should occur first.
+ * A return of 1 means the object should occur last.
+ * A return of 0 means the two objects are identical.
 */
-int asciiConvert(string iKey)
+int compareASCII(string &iKey1, string &iKey2)
 {
-	int keyVal = 0;
-
-	for (int i = 0; i < iKey.length(); i++)
+	for (int i = 0; i < iKey1.length() && i < iKey2.length(); i++)
 	{
-		char keyPart = iKey.at(i);
-		keyVal += static_cast<int>(keyPart);
+		if (static_cast<int>(iKey1.at(i)) < static_cast<int>(iKey2.at(i)))
+		{
+			return -1;
+		}
+		else if (static_cast<int>(iKey1.at(i)) > static_cast<int>(iKey2.at(i)))
+		{
+			return 1;
+		}
 	}
 
-	return keyVal;
+	if (iKey1.length() < iKey2.length())
+	{
+		return -1;
+	}
+	else if (iKey1.length() > iKey2.length())
+	{
+		return 1;
+	}
+
+	return 0;
 }
 
 /*
@@ -33,7 +52,7 @@ void merge(vector<Key> &iKeyVector, int iLow, int iMid, int iHigh, vector<Key> &
 
 	while ((left <= iMid) && (right <= iHigh))
 	{
-		if (asciiConvert(iKeyVector[left]) < asciiConvert(iKeyVector[right]))
+		if (compareASCII(iKeyVector[left], iKeyVector[right]) < 0)
 		{
 			iTempStorage[temp++] = iKeyVector[left++];
 		}
