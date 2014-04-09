@@ -11,25 +11,25 @@
  * A return of 1 means the object should occur last.
  * A return of 0 means the two objects are identical.
 */
-int compareASCII(string &iKey1, string &iKey2)
+int compareASCII(const char* &iKey1, const char* &iKey2)
 {
-	for (int i = 0; i < iKey1.length() && i < iKey2.length(); i++)
+	for (int i = 0; i < strlen(iKey1) && i < strlen(iKey2); i++)
 	{
-		if (static_cast<int>(iKey1.at(i)) < static_cast<int>(iKey2.at(i)))
+		if (static_cast<int>(iKey1[i]) < static_cast<int>(iKey2[i]))
 		{
 			return -1;
 		}
-		else if (static_cast<int>(iKey1.at(i)) > static_cast<int>(iKey2.at(i)))
+		else if (static_cast<int>(iKey1[i]) > static_cast<int>(iKey2[i]))
 		{
 			return 1;
 		}
 	}
 
-	if (iKey1.length() < iKey2.length())
+	if (strlen(iKey1) < strlen(iKey2))
 	{
 		return -1;
 	}
-	else if (iKey1.length() > iKey2.length())
+	else if (strlen(iKey1) > strlen(iKey2))
 	{
 		return 1;
 	}
@@ -52,7 +52,7 @@ void merge(vector<Key> &iKeyVector, int iLow, int iMid, int iHigh, vector<Key> &
 
 	while ((left <= iMid) && (right <= iHigh))
 	{
-		if (compareASCII(iKeyVector[left], iKeyVector[right]) < 0)
+		if (compareASCII(iKeyVector[left].getKey(), iKeyVector[right].getKey()) < 0)
 		{
 			iTempStorage[temp++] = iKeyVector[left++];
 		}
@@ -96,5 +96,10 @@ void mergeSort(vector<Key> &iKeyVector, int iLow, int iHigh, vector<Key> &iTempS
 		mergeSort(iKeyVector, sortLow, sortMid, tempStorage);
 		mergeSort(iKeyVector, ++sortMid, sortHigh);
 		merge(iKeyVector, sortLow, sortMid, sortHigh, tempStorage);
+	}
+
+	int binarySearch(const char* iTerm)
+	{
+
 	}
 }
