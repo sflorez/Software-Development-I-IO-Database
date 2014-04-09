@@ -127,6 +127,7 @@ void SimpleDB::connect(const char* db, const char* user, const char* password)
 						theKeys.push_back(new Key( key, tempPos, tempLength));
 					}
 
+
 				}
 				break;
 			}
@@ -196,59 +197,55 @@ bool SimpleDB::insert(const char* key , const char* value)
 	else
 	{
 		fstream myDataBase(keyFileInUse, ios:: out | ios::in);
+		ofstream myTempFile("tempFile", ios :: out);
+		fstream myDataFile;
+		myDataFile.open(dataFileInUse, ios:: out | ios:: in | ios::app);
+
+		//find the next postion within the dataFile.
+		myDataFile.seekg(ios::end);
+		int position = myDataFile.tellg();
+		int length = strlen(value);
+		string inbuf;
 		myDataBase.seekg(ios::beg);
 
 		while(!myDataBase.eof())
 		{
-			myDataBase >> targetDB;
-			if( dataBaseInUse == targetDB)
+			getline( myDataBase , inbuf);
+			myTempFile << inbuf << endl;
+
+			if(!inbuf.find(dataBaseInUse))
 			{
 				//add the key
-				string numKeys;
-				getline(myDataBase, numKeys);
-				getline(myDataBase, numKeys);
-				cout << numKeys << endl;
-				int num = atoi(numKeys.c_str());
+				getline(myDataBase, inbuf);
+				int num = atoi(inbuf.c_str());
 				cout << num << endl;
-				int numToSeek = num + 3;
-				if( num == 0)
-				{
-					cout << " in if" << endl;
-					myDataBase.seekp(-numToSeek, ios::cur);
-					int currentpos = myDataBase.tellp();
-					myDataBase << (num+1) << endl;
-					myDataBase.seekp(currentpos);
-					getline(myDataBase, numKeys);
-					myDataBase << key << " "<< 0 << " "<< 5 << endl;
+				myTempFile << (num+1) << endl;
+				myTempFile << key << " "<< position << " "<< length << endl;
 
-					myDataBase.close();
-					break;
-				}
-				else
-				{
-//					cout << " in else " << endl;
-				myDataBase.seekp(-numToSeek, ios::cur);
-				int currentpos = myDataBase.tellp();
-				myDataBase << (num+1) << endl;
-				myDataBase.seekp(currentpos);
-				getline(myDataBase, numKeys);
-					for( int i = 0 ; i < num ; i++)
-					{
-						getline(myDataBase, numKeys);
-					}
-					myDataBase << key <<" " <<  0 << " " << 5 << endl;
-					break;
-				}
 			}
+
 		}
 
-		return true;
+		myTempFile.close();
+		myDataBase.close();
 
+		remove(keyFileInUse);
+		rename("tempFile" , keyFileInUse);
+
+		for ( unsigned int i = 0 ; i < strlen(value); i ++)
+		{
+			myDataFile << value[i] << endl;
+		}
+
+		myDataFile.close();
 	}
 
+	return true;
 }
 
-bool SimpleDB::remove(const char* key)
+
+
+bool SimpleDB::removeKey(const char* key)
 {
 	return false;
 }
