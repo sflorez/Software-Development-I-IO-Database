@@ -98,8 +98,36 @@ void mergeSort(vector<Key> &iKeyVector, int iLow, int iHigh, vector<Key> &iTempS
 		merge(iKeyVector, sortLow, sortMid, sortHigh, tempStorage);
 	}
 
-	int binarySearch(const char* iTerm)
+	/*
+	 * binarySearch takes in a vector of key objects and a const char* iTerm. 
+	 * Searches through the vector and compares the ASCII values of the keys in the vector with iTerm
+	 * 
+	 * Returns the position of the key in the vector if found
+	 * Returns -1 if specified key does not exist
+	*/
+	int binarySearch(vector<Key> &iKeyVector, const char* iTerm)
 	{
+		int keyVectLength = iKeyVector.size();
+		int low, high;
+		low = 0;
+		high = iKeyVector.size() - 1;
 
+		while (low <= high)
+		{
+			int mid = (low + high) / 2;
+			if (compareASCII(iKeyVector[mid].getKey(), iTerm) == 0)
+			{
+				return mid;
+			}
+			else if (compareASCII(iKeyVector[mid].getKey(), iTerm) < 0)
+			{
+				high = mid - 1;
+			}
+			else
+			{
+				low = mid + 1;
+			}
+		}
+		return -1;
 	}
 }

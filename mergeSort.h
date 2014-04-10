@@ -24,6 +24,6 @@ void mergeSort(vector<Key> &iKeyVector, int iLow, int iHigh, vector<Key> &iTempS
 *	Member function to search through the sorted vector of keys by their ASCII value, and 
 *	returns the key's location in the vector
 */
-int binarySearch();
+int binarySearch(vector<Key> &iKeyVector, const char* iTerm);
 
 #endif
