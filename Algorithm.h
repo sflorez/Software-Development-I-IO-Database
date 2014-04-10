@@ -10,16 +10,17 @@
 
 class Algorithm
 {
-	private:
-		Algorithm();
 
 	public:
-		 static int	add(int a, int b);
-
+        int Algorithm(); 
+        char* encrypt(char* data, int shift);
+        char* decrypt(char* data, int shift); 
+        bool decrypt(char* data, int shift);
+        bool encrypt(char* data, int shift);
 	private:
 
-		 char encrypt(char* data, int shift);
-		 char decrypt(char* data, int shift);
+		 char* encrypt(char* data, int shift);
+		 char* decrypt(char* data, int shift);
 		 bool encrypt(char* data, int shift);
 		 bool decrypt(char* data, int shift);
 };
