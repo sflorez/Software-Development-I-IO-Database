@@ -7,6 +7,16 @@
 #include<iostream>
 #include "Algorithm.h"
 using namespace std;
+/*
+char* encrypt(char* data, int shift);
+char* decrypt(char* data, int shift); 
+bool decrypt(char* data, int shift);
+bool encrypt(char* data, int shift);
+char* encrypt(char* data, int shift);
+char* decrypt(char* data, int shift);
+bool encrypt(char* data, int shift);
+bool decrypt(char* data, int shift);
+*/
 
 /*
  * constructor uses Caesar encryption with
@@ -16,46 +26,46 @@ using namespace std;
  * if they enter an incorrect shift it will default to 1
  * 
  */
-Algorithm()
+int Algorithm::Algorithm()
 {
-    static const int ASCII_MAX = 126;
-    static const int ASCII_MIN = 32;
+   // static const int ASCII_MAX = 126;
+   // static const int ASCII_MIN = 32;
     
-	char* word = "hello";
-    out<< word[1];
-	//out<< encrypt(word,2);
+	//char* word = "hello";
+    cout<< "Hi it works";
+	return 0;
+    //cout<< encrypt(word,2);
 }
-
-static int Algorithm::add(int a, int b){return a+b;}
-char encrypt(char* data, int shift)
+/*
+char* Algorithm::encrypt(char* data, int shift)
 {
 
 	for(int i = 0; i < *data.length; i++)
 	{
 		int asciiVal = ((int) *data);
 		asciiVal = (asciiVal)*(shift);
-		char* encVal = char*(asciiVal);
+	//	char* encVal = char*(asciiVal);
 		shift = shift + 2;
-		return *encVal;
+		return "nothing";
 	}
 }
 
-char Algorithm::decrypt(char* data, int shift)
+char* Algorithm::decrypt(char* data, int shift)
 {
 	for(int j = 0; j < *data; j++)
 	{
 		int *asciiVal = ((int)*data);
 		asciiVal = (asciiVal)*(shift);
-		char* decVal = char*(asciiVal);
+	//	char* decVal = char*(asciiVal);
 	   	shift = shift + 2;
 		return *decVal;
 	}
 }
 
-/*
+ *
  * Encryption algorithm will shift the current
  * ascii value in a for loop by the power of 2
- */
+ *
 bool Algorithm::encrypt(char* data, int shift)
 {
 
@@ -84,8 +94,6 @@ bool Algorithm::decrypt(char* data, int shift)
 	}
 }
 
-~Algorithm()
-{
-
-}
-
+Algorithm::~Algorithm()
+{} 
+*/
