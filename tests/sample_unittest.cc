@@ -3,7 +3,7 @@
 #include <fstream>
 #include "SimpleDB.h"
 #include "Key.h"
-#include "Algorithm.h"
+#include "Algorithm.h" 
 #include "gtest/gtest.h"
 using namespace std;
 
@@ -81,8 +81,8 @@ class allTest : public testing::Test
         
         void EncryptTest( char * data , int shift )
         {
-            Algorithm algorithm();
-                        
+            Algorithm algorithm;
+                                  
             ASSERT_TRUE( algorithm.encrypt( data, shift ) );
         }
 };
@@ -115,7 +115,7 @@ TEST_F(allTest, CreateTest)
 
 /**
  * Called the "insert" in the fixture
- *//
+ */
 
 TEST_F(allTest, InsertTest)
 {
