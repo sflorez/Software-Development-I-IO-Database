@@ -4,13 +4,27 @@
 
 using namespace std;
 
-Algorithm::Algorithm() {
+Algorithm::Algorithm() 
+{
 	static const int ASCII_MAX = 126;
 	static const int ASCII_MIN = 32;
+    static const int BASE_SHIFT = 1;
 }
 
-char* Algorithm::encrypt(char * data , int shift )
+
+/*
+ *
+ *  Will check each character one at a time from a vector of strings.
+ *  change them to ascii values from 32-126 shif it by 'n' the first
+ *  the first shift and n+n until the it's done 
+*/
+
+char* Algorithm::encrypt(char * data , int shift)
 {
+    if(shift <= 0)
+    {
+        shift = BASE_SHIFT;
+    }
 	// use strlen to find the size of the char* array
 	int length = strlen(data);
 
@@ -23,7 +37,7 @@ char* Algorithm::encrypt(char * data , int shift )
 			//here but you cannot have an assignment on both sides
 //			char* encVal = char*(asciiVal);
 
-			shift = shift + 2;
+			shift = shift + shift;
 		}
 	return "nothing";
 }
@@ -83,6 +97,6 @@ bool Algorithm::canDecrypt(char* data , int shift )
 }
 
 Algorithm::~Algorithm() {
-	// TODO Auto-generated destructor stub
+    // TODO Auto-generated destructor stub
 }
 
