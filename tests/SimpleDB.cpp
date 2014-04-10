@@ -5,7 +5,6 @@
 #include <vector>
 #include <stdlib.h>
 #include "Key.h"
-
 using namespace std;
 
 	const char* keyFileName;
@@ -125,7 +124,7 @@ void SimpleDB::connect(const char* db, const char* user, const char* password)
 						myDataBase >> tempKey >> tempPos >> tempLength;
 						key = tempKey.c_str();
 						cout << key << endl;
-						theKeys.push_back(new Key( key, tempPos, tempLength));
+						//theKeys.push_back(new Key( key, tempPos, tempLength));
 					}
 
 

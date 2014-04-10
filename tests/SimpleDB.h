@@ -7,6 +7,8 @@
 #ifndef SIMPLEDB_H
 #define SIMPLEDB_H
 #include <string>
+#include <cstring>
+#include "Key.h"
 
 class SimpleDB
 {

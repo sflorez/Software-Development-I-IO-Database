@@ -7,6 +7,7 @@
 
 #ifndef KEY_H_
 #define KEY_H_
+#include "SimpleDB.h"
 
 class Key {
 public:
