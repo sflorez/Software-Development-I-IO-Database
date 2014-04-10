@@ -19,7 +19,7 @@ Algorithm::Algorithm()
  *  the first shift and n+n until the it's done 
 */
 
-bool Algorithm::encrypt(char * data , int shift)
+bool Algorithm::encrypt(char* data , int shift)
 {
     if(shift <= 0 || shift >= 126)
     {
@@ -57,6 +57,11 @@ bool Algorithm::encrypt(char * data , int shift)
 			shift += shift;
 		}
 	return true;
+}
+
+bool Algorithm::getEncrypt(char* data, int shift)
+{
+    return Algorithm::encrypt(char*data, int shift);
 }
 
 char* Algorithm::decrypt(char* data , int shift )
