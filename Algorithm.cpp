@@ -19,27 +19,44 @@ Algorithm::Algorithm()
  *  the first shift and n+n until the it's done 
 */
 
-char* Algorithm::encrypt(char * data , int shift)
+bool Algorithm::encrypt(char * data , int shift)
 {
-    if(shift <= 0)
+    if(shift <= 0 || shift >= 126)
     {
         shift = BASE_SHIFT;
     }
+
 	// use strlen to find the size of the char* array
 	int length = strlen(data);
 
 	for(int i = 0; i < length; i++)
 		{
-			int asciiVal = ((int) *data);
-			asciiVal = (asciiVal)*(shift);
+			int asciiVal = ((int) *data[i]);
 
+			if(asciiVal < 32 || asciiVal > 126)
+			{
+					return false;
+			}
+			//Check to make sure shifted value will not be greater 
+			//than 126
+			if(asciiVal + shift > 126)
+			{
+					asciiVal = ((asciiVal + shift) % 94) - 1;
+			}
+			else
+			{
+				asciiVal += shift;
+			}
+			
 			//not sure what you are trying to do
 			//here but you cannot have an assignment on both sides
 //			char* encVal = char*(asciiVal);
+			
+			*data[i] = static_cast<char*>asciiVal;
 
-			shift = shift + shift;
+			shift += shift;
 		}
-	return "nothing";
+	return true;
 }
 
 char* Algorithm::decrypt(char* data , int shift )
