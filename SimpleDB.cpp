@@ -1,19 +1,6 @@
-#include <iostream>
-#include <fstream>
 #include "SimpleDB.h"
-#include <string>
-#include <vector>
-#include <stdlib.h>
-#include "Key.h"
-using namespace std;
 
-	const char* keyFileName;
-	const char* dataFileName;
-	const char* keyFileInUse;
-	const char* dataFileInUse;
-	const char* dataBaseInUse;
-	bool connected;
-	vector<Key*> theKeys;
+using namespace std;
 
 	/*The constructor for the SimpleDB class, creates a keyfile and
 	 * datafile for the database.
@@ -123,8 +110,13 @@ void SimpleDB::connect(const char* db, const char* user, const char* password)
 					{
 						myDataBase >> tempKey >> tempPos >> tempLength;
 						key = tempKey.c_str();
-						cout << key << endl;
-						theKeys.push_back(new Key( key, tempPos, tempLength));
+						theKeys.push_back(new Key( tempKey, tempPos, tempLength));
+					}
+
+					for( int i = 0; i < numKeys; i ++)
+					{
+						cout << theKeys[i]->getKey() <<" "<< theKeys[i]->getPos() << " " << theKeys[i]->getLength()<< endl;
+
 					}
 
 
@@ -202,8 +194,10 @@ bool SimpleDB::insert(const char* key , const char* value)
 		myDataFile.open(dataFileInUse, ios:: out | ios:: in | ios::app);
 
 		//find the next postion within the dataFile.
-		myDataFile.seekg(ios::end);
+		myDataFile.seekg( 0 , myDataFile.end);
 		int position = myDataFile.tellg();
+		cout << "end of data file " << position  << endl;
+
 		int length = strlen(value);
 		string inbuf;
 		myDataBase.seekg(ios::beg);
@@ -232,10 +226,7 @@ bool SimpleDB::insert(const char* key , const char* value)
 		remove(keyFileInUse);
 		rename("tempFile" , keyFileInUse);
 
-		for ( unsigned int i = 0 ; i < strlen(value); i ++)
-		{
-			myDataFile << value[i] << endl;
-		}
+		myDataFile << value << endl;
 
 		myDataFile.close();
 	}

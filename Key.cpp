@@ -6,26 +6,21 @@
  */
 
 #include "Key.h"
-#include <iostream>
 using namespace std;
 
-const char* keyName;
-int position;
-int lengthOfData;
-
-Key::Key( const char* key, int pos, int length  )
+Key::Key( string key, int pos, int length  )
 {
-	setKey(key);
-	setPos(pos);
-	setLength(length);
+	keyName = key;
+	position = pos;
+	lengthOfData = length;
 }
 
 const char* Key::getKey()
 {
-	return keyName;
+	return keyName.c_str();
 }
 
-void Key::setKey( const char* key)
+void Key::setKey( string key)
 {
 	keyName = key;
 }
