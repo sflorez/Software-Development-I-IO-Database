@@ -5,12 +5,15 @@
 class Algorithm {
 private:
 	Algorithm();
-	bool encrypt(char* data , int shift);
+
 	char* decrypt(char* data , int shift);
 	bool canEncrypt( char* data, int shift);
 	bool canDecrypt( char* data, int shift);
+	static const int ASCII_MAX = 126;
+	static const int ASCII_MIN = 32;
+	static const int BASE_SHIFT = 1;
 public:
-    bool getEncrypt(char* data, int shift);
+	static bool encrypt(char* data , int shift);
     virtual ~Algorithm();
 };
 

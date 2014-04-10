@@ -4,11 +4,9 @@
 
 using namespace std;
 
-Algorithm::Algorithm() 
+Algorithm::Algorithm()
 {
-	static const int ASCII_MAX = 126;
-	static const int ASCII_MIN = 32;
-    static const int BASE_SHIFT = 1;
+
 }
 
 
@@ -16,7 +14,7 @@ Algorithm::Algorithm()
  *
  *  Will check each character one at a time from a vector of strings.
  *  change them to ascii values from 32-126 shif it by 'n' the first
- *  the first shift and n+n until the it's done 
+ *  the first shift and n+n until the it's done
 */
 
 bool Algorithm::encrypt(char* data , int shift)
@@ -31,13 +29,13 @@ bool Algorithm::encrypt(char* data , int shift)
 
 	for(int i = 0; i < length; i++)
 		{
-			int asciiVal = ((int) *data[i]);
+			int asciiVal = ((int) data[i]);
 
 			if(asciiVal < 32 || asciiVal > 126)
 			{
 					return false;
 			}
-			//Check to make sure shifted value will not be greater 
+			//Check to make sure shifted value will not be greater
 			//than 126
 			if(asciiVal + shift > 126)
 			{
@@ -47,22 +45,19 @@ bool Algorithm::encrypt(char* data , int shift)
 			{
 				asciiVal += shift;
 			}
-			
+
 			//not sure what you are trying to do
 			//here but you cannot have an assignment on both sides
 //			char* encVal = char*(asciiVal);
-			
-			*data[i] = static_cast<char*>asciiVal;
+
+			data[i] = (char)asciiVal;
 
 			shift += shift;
 		}
 	return true;
 }
 
-bool Algorithm::getEncrypt(char* data, int shift)
-{
-    return Algorithm::encrypt(char*data, int shift);
-}
+
 
 char* Algorithm::decrypt(char* data , int shift )
 {
