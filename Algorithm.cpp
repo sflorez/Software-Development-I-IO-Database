@@ -16,76 +16,86 @@ using namespace std;
  * if they enter an incorrect shift it will default to 1
  * 
  */
-Algorithm()
-{
-    static const int ASCII_MAX = 126;
-    static const int ASCII_MIN = 32;
-    
-	char* word = "hello";
-    out<< word[1];
-	//out<< encrypt(word,2);
+
+Algorithm::Algorithm() {
+	static const int ASCII_MAX = 126;
+	static const int ASCII_MIN = 32;
 }
 
-static int Algorithm::add(int a, int b){return a+b;}
-char encrypt(char* data, int shift)
+char* Algorithm::encrypt(char * data , int shift )
 {
+	// use strlen to find the size of the char* array
+	int length = strlen(data);
 
-	for(int i = 0; i < *data.length; i++)
-	{
-		int asciiVal = ((int) *data);
-		asciiVal = (asciiVal)*(shift);
-		char* encVal = char*(asciiVal);
-		shift = shift + 2;
-		return *encVal;
-	}
+	for(int i = 0; i < length; i++)
+		{
+			int asciiVal = ((int) *data);
+			asciiVal = (asciiVal)*(shift);
+
+			//not sure what you are trying to do
+			//here but you cannot have an assignment on both sides
+//			char* encVal = char*(asciiVal);
+
+			shift = shift + 2;
+		}
+	return "nothing";
 }
 
-char Algorithm::decrypt(char* data, int shift)
+char* Algorithm::decrypt(char* data , int shift )
 {
-	for(int j = 0; j < *data; j++)
-	{
-		int *asciiVal = ((int)*data);
-		asciiVal = (asciiVal)*(shift);
-		char* decVal = char*(asciiVal);
-	   	shift = shift + 2;
-		return *decVal;
-	}
-}
-
-/*
- * Encryption algorithm will shift the current
- * ascii value in a for loop by the power of 2
- */
-bool Algorithm::encrypt(char* data, int shift)
-{
-
-	for(int i = 0; i < *data.length; i++)
-	{
-		//will this increment the position of the char?
-		int asciiVal = ((int) *data);
-		asciiVal = (asciiVal)*(shift);
-		char* encVal = char*(asciiVal);
-		if()
+	// again use strlen to find the size of the char* array
+	int length = strlen(data);
+	for(int j = 0; j < length; j++)
 		{
 
+			//this does not work
+//			int *asciiVal = ((int)*data);
+//			asciiVal = (asciiVal)*(shift);
+
+			//same issue as above
+//			char* decVal = char*(asciiVal);
+
+		   	shift = shift + 2;
 		}
-		shift = shift + 2;
-	}
+	return "nothing";
 }
 
-bool Algorithm::decrypt(char* data, int shift)
+bool Algorithm::canEncrypt(char* data , int shift )
 {
-	for(int j = 0; j < *data; j++)
-	{
-		int *asciiVal = ((int)*data);
-		asciiVal = (asciiVal)*(shift);
+	int length = strlen(data);
+	for(int i = 0; i < length; i++)
+		{
+			//will this increment the position of the char?
+			int asciiVal = ((int) *data);
+			asciiVal = (asciiVal)*(shift);
 
-		shift = shift + 2;
-	}
+			//same as the other methods let me know what you are trying to do
+//			char* encVal = char*(asciiVal);
+//			if()
+//			{
+//
+//			}
+
+			shift = shift + 2;
+		}
+	return false;
 }
 
-~Algorithm()
+bool Algorithm::canDecrypt(char* data , int shift )
 {
+	int length = strlen(data);
+	for(int j = 0; j < length; j++)
+		{
+			//this also does not work
+//			int *asciiVal = ((int)*data);
+//			asciiVal = (asciiVal)*(shift);
 
+			shift = shift + 2;
+		}
+	return false;
+}
+
+Algorithm::~Algorithm() {
+	// TODO Auto-generated destructor stub
 }
 

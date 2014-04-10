@@ -5,23 +5,18 @@
  * Algorithm for encryption and decryption
  *
  */
-#ifdef ALGORITHM_H
-#define ALGORITHM_H
 
-class Algorithm
-{
-	private:
-		Algorithm();
+#ifndef ALGORITHM_H_
+#define ALGORITHM_H_
 
-	public:
-		 static int	add(int a, int b);
-
-	private:
-
-		 char encrypt(char* data, int shift);
-		 char decrypt(char* data, int shift);
-		 bool encrypt(char* data, int shift);
-		 bool decrypt(char* data, int shift);
+class Algorithm {
+public:
+	Algorithm();
+	virtual ~Algorithm();
+	char* encrypt(char* data , int shift);
+	char* decrypt(char* data , int shift);
+	bool canEncrypt( char* data, int shift);
+	bool canDecrypt( char* data, int shift);
 };
 
-#endif
+#endif /* ALGORITHM_H_ */
