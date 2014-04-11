@@ -1,6 +1,6 @@
 
 #include "Algorithm.h"
-#include <iostream>
+
 
 using namespace std;
 
@@ -17,7 +17,7 @@ Algorithm::Algorithm()
  *  the first shift and n+n until the it's done
 */
 
-bool Algorithm::encrypt(char* data , int shift)
+static bool Algorithm::encrypt(const char* data , int shift)
 {
     if(shift <= 0 || shift >= 126)
     {
@@ -51,7 +51,9 @@ bool Algorithm::encrypt(char* data , int shift)
 //			char* encVal = char*(asciiVal);
 
 			data[i] = (char)asciiVal;
-
+//          
+//          this need to have a temp value to hold the initial shift to add it to the new shift
+//          
 			shift += shift;
 		}
 	return true;

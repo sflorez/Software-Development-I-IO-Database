@@ -2,6 +2,8 @@
 #ifndef ALGORITHM_H_
 #define ALGORITHM_H_
 
+#include<iostream>
+
 class Algorithm {
 private:
 	Algorithm();
@@ -13,7 +15,7 @@ private:
 	static const int ASCII_MIN = 32;
 	static const int BASE_SHIFT = 1;
 public:
-	static bool encrypt(char* data , int shift);
+	static bool encrypt(const char* data , int shift);
     virtual ~Algorithm();
 };
 
