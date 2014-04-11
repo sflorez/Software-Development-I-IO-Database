@@ -18,11 +18,12 @@ bool Algorithm::encrypt(char* data , int shift)
     //gives a base shift of 1
     if(shift <= 0)
     {
-        shift = BASE_SHIFT;
+        decrypt(char* data, int shift);
     }
-    
-    // initial shift
-    int temp = shift;
+    else
+    {
+        // initial shift
+        int temp = shift;
     
 	// use strlen to find the size of the char* array
 	int length = strlen(data);
@@ -49,6 +50,7 @@ bool Algorithm::encrypt(char* data , int shift)
 			
             shift += temp;
 		}
+    }   
 	return true;
 }
 
@@ -58,7 +60,12 @@ bool Algorithm::encrypt(char* data , int shift)
  */
 bool Algorithm::decrypt(char* data , int shift)
 {
-    
+    if(shift <= 0)
+    {
+        encrypt(char* data, int shift);
+    }
+    else
+    { 
     int temp = shift;
     
 	// use strlen to find the size of the char* array
@@ -87,7 +94,7 @@ bool Algorithm::decrypt(char* data , int shift)
 			
             shift += temp;
 		}
-    
+    }
 	return true;
 }
 
