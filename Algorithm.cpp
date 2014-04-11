@@ -1,27 +1,29 @@
-
 #include "Algorithm.h"
+
 using namespace std;
 
-Algorithm::Algorithm()
-{
-
-}
-
 /*
- *
+ * default constructor
+ */
+Algorithm::Algorithm()
+{}
+/*
  *  Will check each character one at a time from a vector of strings.
- *  change them to ascii values from 32-126 shift it by 'n' the first
- *  the first shift and n+n until the it's done
+ *  change them to ascii values from 32-126 shift it by 'n'
+ *  the first shift and n+ (the initial n) until the it's done
+ *  and return it to its encrypted form
 */
-
-static bool Algorithm::encrypt(const char* data , int shift)
+bool Algorithm::encrypt(char* data , int shift)
 {
-    if(shift <= 0 || shift >= 126)
+    //gives a base shift of 1
+    if(shift <= 0)
     {
         shift = BASE_SHIFT;
     }
+    
+    // initial shift
     int temp = shift;
-
+    
 	// use strlen to find the size of the char* array
 	int length = strlen(data);
 
@@ -33,8 +35,7 @@ static bool Algorithm::encrypt(const char* data , int shift)
 			{
 					return false;
 			}
-			//Check to make sure shifted value will not be greater
-			//than 126
+            
 			if(asciiVal + shift > 126)
 			{
 					asciiVal = ((asciiVal + shift) % 94) - 1;
@@ -44,18 +45,49 @@ static bool Algorithm::encrypt(const char* data , int shift)
 				asciiVal += shift;
 			}
 
-			//not sure what you are trying to do
-			//here but you cannot have an assignment on both sides
-//			char* encVal = char*(asciiVal);
-
 			data[i] = (char)asciiVal;
-
-			shift += temp;
+			
+            shift += temp;
 		}
 	return true;
 }
 
-Algorithm::~Algorithm() {
-    // TODO Auto-generated destructor stub
+/*
+ * Decrypts the encrypted data by subtracting
+ * the ascii value from where it is when it is encrypted
+ */
+bool Algorithm::decrypt(char* data , int shift)
+{
+    
+    int temp = shift;
+    
+	// use strlen to find the size of the char* array
+	int length = strlen(data);
+
+	for(int i = 0; i < length; i++)
+		{
+			int asciiVal = ((int) data[i]);
+
+			if(asciiVal < 32 || asciiVal > 126)
+			{
+					return false;
+			}
+            
+			if(asciiVal - shift < 32)
+			{
+					asciiVal = ((asciiVal - shift) % 94) + 1;
+			}
+			else
+			{
+				asciiVal -= shift;
+			}
+
+			data[i] = (char)asciiVal;
+			
+            shift += temp;
+		}
+    
+	return true;
 }
 
+Algorithm::~Algorithm(){}
