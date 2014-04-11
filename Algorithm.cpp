@@ -75,7 +75,8 @@ bool Algorithm::decrypt(char* data , int shift)
             
 			if(asciiVal - shift < 32)
 			{
-					asciiVal = ((asciiVal - shift) % 94) + 1;
+               	asciiVal = (32 - (asciiVal - shift)) - 1;
+                asciiVal = 126 - asciiVal;
 			}
 			else
 			{
