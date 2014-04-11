@@ -15,16 +15,11 @@ Algorithm::Algorithm()
 */
 bool Algorithm::encrypt(char* data , int shift)
 {
-    //gives a base shift of 1
-    if(shift <= 0)
-    {
-        decrypt(char* data, int shift);
-    }
-    else
-    {
-        // initial shift
-        int temp = shift;
-    
+
+    //gives a base shift of
+    // initial shift
+    int temp = shift;
+
 	// use strlen to find the size of the char* array
 	int length = strlen(data);
 
@@ -36,10 +31,25 @@ bool Algorithm::encrypt(char* data , int shift)
 			{
 					return false;
 			}
-            
-			if(asciiVal + shift > 126)
+
+			else if(asciiVal + shift > 126)
 			{
-					asciiVal = ((asciiVal + shift) % 94) - 1;
+//				cout << asciiVal << endl;
+//				asciiVal = ((asciiVal + shift) % 94) ;
+//				cout << asciiVal << endl;
+				do
+				{
+					asciiVal = ( asciiVal + shift ) - 126;
+					asciiVal = 32 + asciiVal;
+				}while( asciiVal > 126);
+			}
+			else if( asciiVal + shift < 32)
+			{
+				do{
+					asciiVal = (32 - (asciiVal - shift));
+					asciiVal = 126 - asciiVal;
+
+				}while(asciiVal < 32);
 			}
 			else
 			{
@@ -47,10 +57,9 @@ bool Algorithm::encrypt(char* data , int shift)
 			}
 
 			data[i] = (char)asciiVal;
-			
+
             shift += temp;
 		}
-    }   
 	return true;
 }
 
@@ -60,14 +69,10 @@ bool Algorithm::encrypt(char* data , int shift)
  */
 bool Algorithm::decrypt(char* data , int shift)
 {
-    if(shift <= 0)
-    {
-        encrypt(char* data, int shift);
-    }
-    else
-    { 
+
+
     int temp = shift;
-    
+
 	// use strlen to find the size of the char* array
 	int length = strlen(data);
 
@@ -79,22 +84,37 @@ bool Algorithm::decrypt(char* data , int shift)
 			{
 					return false;
 			}
-            
-			if(asciiVal - shift < 32)
+
+			else if(asciiVal - shift < 32)
 			{
-               	asciiVal = (32 - (asciiVal - shift)) - 1;
-                asciiVal = 126 - asciiVal;
+//					cout << asciiVal << endl;
+//					asciiVal = (asciiVal- shift  % 94) ;
+				do{
+					asciiVal = (32 - (asciiVal - shift));
+					asciiVal = 126 - asciiVal;
+
+				}while(asciiVal < 32);
+
+			}
+			else if( asciiVal - shift > 126 )
+			{
+				do
+				{
+					asciiVal = ( asciiVal + shift ) - 126;
+					asciiVal = 32 + asciiVal;
+				}while( asciiVal > 126);
 			}
 			else
 			{
 				asciiVal -= shift;
 			}
 
+//			cout << asciiVal << endl;
 			data[i] = (char)asciiVal;
-			
+
             shift += temp;
+
 		}
-    }
 	return true;
 }
 
