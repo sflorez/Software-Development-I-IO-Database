@@ -1,17 +1,24 @@
 
 #ifndef ALGORITHM_H_
 #define ALGORITHM_H_
-#include <cstring>
-#include "SimpleDB.h"
+#include<cstring>
+#include<string>
+#include<iostream>
+
 class Algorithm {
 private:
 	Algorithm();
-	bool encrypt(char* data , int shift);
-	char* decrypt(char* data , int shift);
-	bool canEncrypt( char* data, int shift);
-	bool canDecrypt( char* data, int shift);
+
+    // Limit for data characters by ascii values
+	static const int ASCII_MAX = 126;
+	static const int ASCII_MIN = 32;
+    
+    // If shift is entered under 1 it will be set to 1
+	static const int BASE_SHIFT = 1;
 public:
-    bool getEncrypt(char* data, int shift);
+    
+	static bool decrypt(char* data, int shift);
+    static bool encrypt(char* data, int shift);
     virtual ~Algorithm();
 };
 

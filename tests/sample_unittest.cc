@@ -81,9 +81,9 @@ class allTest : public testing::Test
         
         void EncryptTest( char * data , int shift )
         {
-            Algorithm algorithm;
+            //Algorithm algorithm;
                                   
-            ASSERT_TRUE( algorithm.encrypt( data, shift ) );
+            ASSERT_TRUE( Algorithm::encrypt( data, shift ) );
         }
 };
 
