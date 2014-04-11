@@ -1,7 +1,5 @@
 
 #include "Algorithm.h"
-#include <iostream>
-
 using namespace std;
 
 Algorithm::Algorithm()
@@ -9,11 +7,10 @@ Algorithm::Algorithm()
 
 }
 
-
 /*
  *
  *  Will check each character one at a time from a vector of strings.
- *  change them to ascii values from 32-126 shif it by 'n' the first
+ *  change them to ascii values from 32-126 shift it by 'n' the first
  *  the first shift and n+n until the it's done
 */
 
@@ -23,6 +20,7 @@ bool Algorithm::encrypt(char* data , int shift)
     {
         shift = BASE_SHIFT;
     }
+    int temp = shift;
 
 	// use strlen to find the size of the char* array
 	int length = strlen(data);
@@ -52,65 +50,9 @@ bool Algorithm::encrypt(char* data , int shift)
 
 			data[i] = (char)asciiVal;
 
-			shift += shift;
+			shift += temp;
 		}
 	return true;
-}
-
-
-
-char* Algorithm::decrypt(char* data , int shift )
-{
-	// again use strlen to find the size of the char* array
-	int length = strlen(data);
-	for(int j = 0; j < length; j++)
-		{
-
-			//this does not work
-//			int *asciiVal = ((int)*data);
-//			asciiVal = (asciiVal)*(shift);
-
-			//same issue as above
-//			char* decVal = char*(asciiVal);
-
-		   	shift = shift + 2;
-		}
-	return "nothing";
-}
-
-bool Algorithm::canEncrypt(char* data , int shift )
-{
-	int length = strlen(data);
-	for(int i = 0; i < length; i++)
-		{
-			//will this increment the position of the char?
-			int asciiVal = ((int) *data);
-			asciiVal = (asciiVal)*(shift);
-
-			//same as the other methods let me know what you are trying to do
-//			char* encVal = char*(asciiVal);
-//			if()
-//			{
-//
-//			}
-
-			shift = shift + 2;
-		}
-	return false;
-}
-
-bool Algorithm::canDecrypt(char* data , int shift )
-{
-	int length = strlen(data);
-	for(int j = 0; j < length; j++)
-		{
-			//this also does not work
-//			int *asciiVal = ((int)*data);
-//			asciiVal = (asciiVal)*(shift);
-
-			shift = shift + 2;
-		}
-	return false;
 }
 
 Algorithm::~Algorithm() {
