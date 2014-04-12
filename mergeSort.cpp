@@ -71,7 +71,7 @@ void merge(vector<Key*> &keyVector, vector<Key*> &tempStorage, int low, int pivo
 	 * Tweeked by Michael. Should take in a vector of Key objects and an int, stating the size of the key requested
 	 * Returns the int of the Key's location in the vector. 
 	*/
-int binarySearch(vector<Key> &iKeyVector, int iKeyLength)
+int binarySearch(vector<Key*> &iKeyVector, int iKeyLength)
 	{
 		int keyVectLength = iKeyVector.size();
 		int low, high;
