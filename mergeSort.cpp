@@ -2,148 +2,95 @@
 #include <vector>
 using namespace std;
 
-/*
- * Compares two keys character by character. If it detects any character difference,
- * it computes the difference and determines which string should occur first in alphabetical
- * order.
- * If the strings are equivalent up until a point where one string is longer than the other,
- * the longer string will return a larger value.
- * A return of -1 means the object should occur first.
- * A return of 1 means the object should occur last.
- * A return of 0 means the two objects are identical.
-*/
-int compareASCII(const char* iKey1, const char* iKey2)
-{
-	for (unsigned int i = 0; i < strlen(iKey1) && i < strlen(iKey2); i++)
-	{
-		if ((int)(iKey1[i]) < (int)(iKey2[i]))
-		{
-			return -1;
-		}
-		else if ((int)(iKey1[i]) > (int)(iKey2[i]))
-		{
-			return 1;
-		}
-	}
-
-	if (strlen(iKey1) < strlen(iKey2))
-	{
-		return -1;
-	}
-	else if (strlen(iKey1) > strlen(iKey2))
-	{
-		return 1;
-	}
-
-	return 0;
-}
 
 /*
  * Called in mergeSort()
  * Stores values from the vector containing the keys into a temporary storage vector as the
  *		keys are ordered.
  * Once completely ordered, the keys are then merged back into the original vector
+ * Sorts based on the length of the keyName.
 */
-void merge(vector<Key*> &iKeyVector, int iLow, int iMid, int iHigh, vector<Key*> &iTempStorage)
+void merge(vector<Key*> &keyVector,vector<Key*> &tempStorage, int low, int pivot, int high );
+void mergeSort(vector<Key*> &keyVector, vector<Key*> &tempStorage, int low, int high)
 {
-	int left = iLow;
-	int right = iMid + 1;
-
-	int tempLow = iLow;
-
-	while ((left <= iMid) && (right <= iHigh))
-	{
-		if (compareASCII(iKeyVector[left]->getKey(), iKeyVector[right]->getKey()) < 0)
-		{
-			iTempStorage.at(tempLow)= iKeyVector.at(left);
-			left++;
-		}
-		else
-		{
-			iTempStorage.at(tempLow) = iKeyVector.at(right);
-			right++;
-		}
-		tempLow ++;
-	}
-
-	if(left > iMid)
-	{
-		for ( unsigned int k = right ; k <= iHigh ; k ++ )
-		{
-			iTempStorage.at(tempLow) = iKeyVector.at(k);
-			tempLow++;
-		}
-
-	}
-
-	else
-	{
-		for( unsigned int k = left; k <=iMid; k ++)
-		{
-			iTempStorage.at(tempLow)= iKeyVector.at(k);
-			tempLow++;
-		}
-	}
-
-	for (tempLow = tempLow - 1; tempLow >= iLow; tempLow--)// changed --
-	{
-		iKeyVector.at(tempLow) = iTempStorage.at(tempLow);
-	}
+    int pivot;
+    if(low<high)
+    {
+        pivot=(low+high)/2;
+        mergeSort( keyVector, tempStorage,low,pivot);
+        mergeSort(keyVector,tempStorage,pivot+1,high);
+        merge(keyVector,tempStorage,low,pivot,high);
+    }
 }
-
-/*
- * mergeSort function. Requires a vector of keys, the beginning and end of the  segment (as an int to be used to reference the vector)
- *		and a temporary vector for storage to merge the keys
-*/
-void mergeSort(vector<Key*> &iKeyVector, int iLow, int iHigh, vector<Key*> &iTempStorage)
+void merge(vector<Key*> &keyVector, vector<Key*> &tempStorage, int low, int pivot, int high)
 {
-	int sortLow, sortMid, sortHigh;
+    int left,tempLow,right,k;
+    left=low;
+    tempLow=low;
+    right=pivot+1;
 
-	sortLow = iLow;
-	sortHigh = iHigh;
-
-
-	if (sortLow < sortHigh)
-	{
-		sortMid = (sortHigh + sortLow) / 2;
-
-		mergeSort(iKeyVector, sortLow, sortMid, iTempStorage);
-		mergeSort(iKeyVector, sortMid +1 , sortHigh , iTempStorage);
-		merge(iKeyVector, sortLow, sortMid, sortHigh, iTempStorage);
-	}
-
+    while((left<=pivot)&&(right<=high))
+    {
+        if(strlen(keyVector[left]->getKey())<= strlen(keyVector[right]->getKey()))
+        {
+            tempStorage[tempLow]=keyVector[left];
+            left++;
+        }
+        else
+        {
+            tempStorage[tempLow]=keyVector[right];
+            right++;
+        }
+        tempLow++;
+    }
+    if(left>pivot)
+    {
+        for(k=right; k<=high; k++)
+        {
+            tempStorage[tempLow]= keyVector[k];
+            tempLow++;
+        }
+    }
+    else
+    {
+        for(k=left; k<=pivot; k++)
+        {
+            tempStorage[tempLow]=keyVector[k];
+            tempLow++;
+        }
+    }
+    for(k=low; k<=high; k++)
+    	{
+    		keyVector[k]=tempStorage[k];
+    	}
 }
 
 	/*
-	 * binarySearch takes in a vector of key objects and a const char* iTerm.
-	 * Searches through the vector and compares the ASCII values of the keys in the vector with iTerm
-	 *
-	 * Returns the position of the key in the vector if found
-	 * Returns -1 if specified key does not exist
+	 * Should search based on the length of the keyName.
 	*/
-	int binarySearch(vector<Key> &iKeyVector, const char* iTerm)
-	{
-		int keyVectLength = iKeyVector.size();
-		int low, high;
-		low = 0;
-		high = iKeyVector.size() - 1;
-
-		while (low <= high)
-		{
-			int mid = (low + high) / 2;
-			if (compareASCII(iKeyVector[mid].getKey(), iTerm) == 0)
-			{
-				return mid;
-			}
-			else if (compareASCII(iKeyVector[mid].getKey(), iTerm) < 0)
-			{
-				high = mid - 1;
-			}
-			else
-			{
-				low = mid + 1;
-			}
-		}
-		return -1;
-	}
+//	int binarySearch(vector<Key> &iKeyVector, const char* iTerm)
+//	{
+//		int keyVectLength = iKeyVector.size();
+//		int low, high;
+//		low = 0;
+//		high = iKeyVector.size() - 1;
+//
+//		while (low <= high)
+//		{
+//			int mid = (low + high) / 2;
+//			if (compareASCII(iKeyVector[mid].getKey(), iTerm) == 0)
+//			{
+//				return mid;
+//			}
+//			else if (compareASCII(iKeyVector[mid].getKey(), iTerm) < 0)
+//			{
+//				high = mid - 1;
+//			}
+//			else
+//			{
+//				low = mid + 1;
+//			}
+//		}
+//		return -1;
+//	}
 

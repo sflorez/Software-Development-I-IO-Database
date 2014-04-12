@@ -1,6 +1,5 @@
 /*
 *	mergeSort.h
-*	Headerfile for mergeSort.cpp
 *
 */
 
@@ -12,17 +11,17 @@
 /*
 *	Member function that is called by mergeSort() to merge values
 */
-void merge( std::vector<Key*> &iKeyVector, int iLow, int iMid, int iHigh, std::vector<Key*> &iTempStorage);
+void merge( std::vector<Key*> &keyVector, std::vector<Key*> &tempStorage, int low, int pivot, int high);
 
 /*
 *	Member function to sort the vector of keys for the current database
 */
-void mergeSort(std::vector<Key*> &iKeyVector, int iLow, int iHigh, std::vector<Key*> &iTempStorage);
+void mergeSort(std::vector<Key*> &keyVector, std::vector<Key*> &tempStorage, int low, int high);
 
 /*
 *	Member function to search through the sorted vector of keys by their ASCII value, and
 *	returns the key's location in the vector
 */
-int binarySearch(std::vector<Key*> &iKeyVector, const char* iTerm);
+//int binarySearch(std::vector<Key*> &iKeyVector, const char* iTerm);
 
 #endif
