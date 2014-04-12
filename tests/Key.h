@@ -7,11 +7,19 @@
 
 #ifndef KEY_H_
 #define KEY_H_
-#include "SimpleDB.h"
 
+#include <iostream>
+#include <string>
+#include "SimpleDB.h"
 class Key {
+
+private:
+	std::string keyName;
+	int position;
+	int lengthOfData;
 public:
-	Key( const char* key, int pos, int length );
+      
+	Key( std::string key, int pos, int length );
 
 	/*
 	 * Return the key of the key object.
@@ -25,7 +33,7 @@ public:
 	 *
 	 * @params the keyname
 	 */
-	void setKey( const char* key);
+	void setKey( std::string key);
 	/*
 	 * Retrieve the pos associated with this key object
 	 *

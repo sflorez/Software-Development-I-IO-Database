@@ -8,10 +8,23 @@
 #define SIMPLEDB_H
 #include <string>
 #include <cstring>
+#include <vector>
+#include <iostream>
+#include <fstream>
+#include <stdlib.h>
 #include "Key.h"
 
 class SimpleDB
 {
+	private:
+	const char* keyFileName;
+	const char* dataFileName;
+	const char* keyFileInUse;
+	const char* dataFileInUse;
+	const char* dataBaseInUse;
+	bool connected;
+    std::vector<Key*> theKeys;
+
     public:
         /**
          * Minimum and maximum length of key and value strings,
