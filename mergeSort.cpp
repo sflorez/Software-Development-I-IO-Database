@@ -1,4 +1,5 @@
 #include "Key.h"
+#include <cstring>
 #include <vector>
 using namespace std;
 
@@ -66,31 +67,33 @@ void merge(vector<Key*> &keyVector, vector<Key*> &tempStorage, int low, int pivo
 }
 
 	/*
-	 * Should search based on the length of the keyName.
+	 * Searches based on the length of the keyName.
+	 * Tweeked by Michael. Should take in a vector of Key objects and an int, stating the size of the key requested
+	 * Returns the int of the Key's location in the vector. 
 	*/
-//	int binarySearch(vector<Key> &iKeyVector, const char* iTerm)
-//	{
-//		int keyVectLength = iKeyVector.size();
-//		int low, high;
-//		low = 0;
-//		high = iKeyVector.size() - 1;
-//
-//		while (low <= high)
-//		{
-//			int mid = (low + high) / 2;
-//			if (compareASCII(iKeyVector[mid].getKey(), iTerm) == 0)
-//			{
-//				return mid;
-//			}
-//			else if (compareASCII(iKeyVector[mid].getKey(), iTerm) < 0)
-//			{
-//				high = mid - 1;
-//			}
-//			else
-//			{
-//				low = mid + 1;
-//			}
-//		}
-//		return -1;
-//	}
+int binarySearch(vector<Key> &iKeyVector, int iKeyLength)
+	{
+		int keyVectLength = iKeyVector.size();
+		int low, high;
+		low = 0;
+		high = iKeyVector.size() - 1;
+
+		while (low <= high)
+		{
+			int mid = (low + high) / 2;
+			if (strlen(iKeyVector[mid]->getKey()) == iKeyLength)
+			{
+				return mid;
+			}
+			else if (strlen(iKeyVector[mid]->getKey()) < iKeyLength)
+			{
+				high = mid - 1;
+			}
+			else
+			{
+				low = mid + 1;
+			}
+		}
+		return -1;
+}
 

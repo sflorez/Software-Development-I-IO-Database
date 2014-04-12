@@ -19,9 +19,9 @@ void merge( std::vector<Key*> &keyVector, std::vector<Key*> &tempStorage, int lo
 void mergeSort(std::vector<Key*> &keyVector, std::vector<Key*> &tempStorage, int low, int high);
 
 /*
-*	Member function to search through the sorted vector of keys by their ASCII value, and
+*	Member function to search through the sorted vector of keys by their length, and
 *	returns the key's location in the vector
 */
-//int binarySearch(std::vector<Key*> &iKeyVector, const char* iTerm);
+int binarySearch(std::vector<Key*> &iKeyVector, int iKeyLength);
 
 #endif
