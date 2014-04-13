@@ -81,7 +81,6 @@ int binarySearch(vector<Key*> &iKeyVector, int iKeyLength)
 
 		while (low <= high)
 		{
-				cout << "Ran through one stage" << endl;
 			int mid = (low + high) / 2;
 			if (strlen(iKeyVector[mid]->getKey()) == iKeyLength)
 			{
