@@ -70,6 +70,7 @@ void merge(vector<Key*> &keyVector, vector<Key*> &tempStorage, int low, int pivo
 	 * Searches based on the length of the keyName.
 	 * Tweeked by Michael. Should take in a vector of Key objects and an int, stating the size of the key requested
 	 * Returns the int of the Key's location in the vector. 
+	 * Returns -1 if the key is not found. 
 	*/
 int binarySearch(vector<Key*> &iKeyVector, int iKeyLength)
 	{
@@ -80,6 +81,7 @@ int binarySearch(vector<Key*> &iKeyVector, int iKeyLength)
 
 		while (low <= high)
 		{
+				cout << "Ran through one stage" << endl;
 			int mid = (low + high) / 2;
 			if (strlen(iKeyVector[mid]->getKey()) == iKeyLength)
 			{
