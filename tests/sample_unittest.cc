@@ -58,9 +58,27 @@ class allTest : public testing::Test
             file.open(i_KeyFileName, ios::in);
             getline(file, buffer);
             
-            ASSERT_EQ(correct, buffer);             
+            ASSERT_EQ(correct, buffer);
         }
         
+        /**
+         * 
+         * @params: db, user, password
+         */
+        
+        void connectTest( const char* db, const char* user, const char* password )
+        {
+            i_KeyFileName = "keyFile";
+            i_DatabaseFile = "dataFile";
+                           
+            SimpleDB simpleDB( i_KeyFileName, i_DatabaseFile );
+            //simpleDB.connect( db, user, password);
+            ASSERT_FALSE(simpleDB.getConnect());
+            
+            //simpleDB.connect( db, user, password);
+            
+            ASSERT_TRUE(simpleDB.getConnect());
+        }
         /**
          * 
          * 
@@ -74,17 +92,20 @@ class allTest : public testing::Test
             i_user = "TestUserName";
             i_password = "TestPassword";
             const int shift = 4;
-            SimpleDB simpleDB( i_KeyFileName, i_DatabaseFile);
-            simpleDB.create(i_db, i_user, i_password, shift);            
-            ASSERT_TRUE(simpleDB.insert( key, value ));                                           
+            SimpleDB simpleDB( i_KeyFileName, i_DatabaseFile );
+          //  simpleDB.connect( i_db, i_user, i_password);
+            //simpleDB.create( i_db, i_user, i_password, shift );
+            ASSERT_TRUE(simpleDB.insert( key, value ));
         }
         
+        /**
         void EncryptTest( char * data , int shift )
         {
             //Algorithm algorithm;
                                   
             ASSERT_TRUE( Algorithm::encrypt( data, shift ) );
         }
+        */
 };
 
 
@@ -98,6 +119,18 @@ TEST_F(allTest, ConstructorTest)
     const string &data = "dataFile";
     ConstructorTester( key, data );   
 }
+
+/**
+ * Calls the "connectTest"
+ */
+TEST_F(allTest, connectTest)
+{
+    const char* db = "TestDataBase";
+    const char* user = "TestUserName";
+    const char* password = "TestPassword";
+    connectTest( db, user, password );
+}
+      
 
 /**
  * Calls the "CreateTest" in the fixture
@@ -124,9 +157,11 @@ TEST_F(allTest, InsertTest)
     InsertTest( key, value) ;
 }
 
+/*
 TEST_F(allTest, EncryptTest)
 {
     char * key = "key1";
     int shift = 4;
     EncryptTest( key, shift );
 }
+*/
