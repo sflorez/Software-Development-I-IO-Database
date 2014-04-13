@@ -22,6 +22,6 @@ void mergeSort(std::vector<Key*> &keyVector, std::vector<Key*> &tempStorage, int
 *	Member function to search through the sorted vector of keys by their length, and
 *	returns the key's location in the vector
 */
-int binarySearch(std::vector<Key*> &iKeyVector, int iKeyLength);
+int binarySearch(std::vector<Key*> &iKeyVector, const char* iKey);
 
 #endif
