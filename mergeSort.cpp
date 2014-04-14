@@ -83,7 +83,36 @@ void merge(vector<Key*> &keyVector, vector<Key*> &tempStorage, int low, int pivo
           }
   }
 
+
   void mergeSort(vector<Key*> &keyVector, vector<Key*> &tempStorage, int low, int high)
+
+/*
+ * Secondary merge function. Called by mergeSortLoc, based on key location instead of ASCII values.
+*/
+void mergeLoc(vector<Key*> &keyVector, vector<Key*> &tempStorage, int low, int pivot, int high)
+{
+    int left,tempLow,right,k;
+    left=low;
+    tempLow=low;
+    right=pivot+1;
+
+    while((left<=pivot)&&(right<=high))
+    {
+        //(int)keyVector[left]->getKey()) <= ...
+        if(keyVector[left]->getPos() < keyVector[right]->getPos())
+        {
+            tempStorage[tempLow]=keyVector[left];
+            left++;
+        }
+        else
+        {
+            tempStorage[tempLow]=keyVector[right];
+            right++;
+        }
+        tempLow++;
+  }
+  if(left>pivot)
+
   {
       int pivot;
       if(low<high)
