@@ -75,4 +75,4 @@ public:
 	virtual ~Key();
 };
 
-#endif /* KEY_H_ */
+#endif

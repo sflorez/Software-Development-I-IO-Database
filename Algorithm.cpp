@@ -1,12 +1,12 @@
 #include "Algorithm.h"
+#include "SimpleDB.h"
 
 using namespace std;
 
 /*
  * default constructor
  */
-Algorithm::Algorithm()
-{}
+Algorithm::Algorithm(){}
 /*
  *  Will check each character one at a time from a vector of strings.
  *  change them to ascii values from 32-126 shift it by 'n'
@@ -34,9 +34,6 @@ bool Algorithm::encrypt(char* data , int shift)
 
 			else if(asciiVal + shift > 126)
 			{
-//				cout << asciiVal << endl;
-//				asciiVal = ((asciiVal + shift) % 94) ;
-//				cout << asciiVal << endl;
 				do
 				{
 					asciiVal = ( asciiVal + shift ) - 126;
@@ -87,8 +84,6 @@ bool Algorithm::decrypt(char* data , int shift)
 
 			else if(asciiVal - shift < 32)
 			{
-//					cout << asciiVal << endl;
-//					asciiVal = (asciiVal- shift  % 94) ;
 				do{
 					asciiVal = (32 - (asciiVal - shift));
 					asciiVal = 126 - asciiVal;
@@ -109,7 +104,6 @@ bool Algorithm::decrypt(char* data , int shift)
 				asciiVal -= shift;
 			}
 
-//			cout << asciiVal << endl;
 			data[i] = (char)asciiVal;
 
             shift += temp;
@@ -117,5 +111,7 @@ bool Algorithm::decrypt(char* data , int shift)
 		}
 	return true;
 }
-
+/*
+ * Destructor
+ */
 Algorithm::~Algorithm(){}
