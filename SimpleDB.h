@@ -24,6 +24,7 @@ class SimpleDB
 	const char* dataBaseInUse;
 	bool connected;
 	std::vector<Key*> theKeys;
+	int keysInVect;
 
     public:
         /**
@@ -57,7 +58,7 @@ class SimpleDB
          * The failed error number and message may be accessed using
          * errorNum() and errorMessage() thereafter.
          */
-        void create(const char* db, const char* user, const char* password, const int shift);
+        void create(const char* db, const char* user, const char* password, int shift);
 
         /**
          * Connect to existing database with given name and credentials.

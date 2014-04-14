@@ -1,6 +1,10 @@
 #include "SimpleDB.h"
+#include "Algorithm.h"
+#include "mergeSort.h"
 
 using namespace std;
+
+int shift;
 
 	/*The constructor for the SimpleDB class, creates a keyfile and
 	 * datafile for the database.
@@ -14,6 +18,7 @@ SimpleDB::SimpleDB( const string & keyFile , const string & dataFile)
 		dataFileInUse = "";
 		dataBaseInUse = "";
 		connected = false;
+		keysInVect = 0;
 
 
 		ifstream file(keyFileName);
@@ -46,7 +51,7 @@ SimpleDB::SimpleDB( const string & keyFile , const string & dataFile)
 
 SimpleDB::~SimpleDB(){}
 
-void SimpleDB::create( const char* db, const char* user, const char* password, const int shift)
+void SimpleDB::create( const char* db, const char* user, const char* password, int shift)
 {
 	int numKeys = 0;
 
@@ -65,12 +70,8 @@ void SimpleDB::connect(const char* db, const char* user, const char* password)
 	// keyfile
 	fstream myDataBase(keyFileInUse, ios:: out | ios::in);
 	string targetDB;
-	const char* userName;
 	string targetName;
 	string targetPass;
-	const char* userPass;
-	string tempName;
-	string tempPass;
 
 	myDataBase.seekg(ios::beg);
 
@@ -79,47 +80,38 @@ void SimpleDB::connect(const char* db, const char* user, const char* password)
 		myDataBase >> targetDB;
 		if( db == targetDB)
 		{
-			myDataBase >> targetName >> targetPass;
-			cout << "Database found please enter credentials" << endl;
-			cout << "Please enter the username and password of the database"
-					" seperated by a space" << endl;
-			cin >> tempName >> tempPass;
-			userName = tempName.c_str();
-			userPass = tempPass.c_str();
+			myDataBase >> targetName >> targetPass >> shift;
+			cout << "Database found" << endl;
 
-			if( userName == targetName && userPass == targetPass)
+			if( user == targetName && password == targetPass)
 			{
 				cout << "Successfully accessed the database" << endl;
 				dataBaseInUse = db;
 				connected = true;
-				int numKeys;
+				//int numKeys;
 				string tempKey;
-				const char* key;
 				int tempPos = 0;
 				int tempLength = 0;
 				getline( myDataBase, tempKey);
-				myDataBase >> numKeys;
-				cout << numKeys << endl;
-				if( numKeys == 0 )
+				myDataBase >> keysInVect;
+				cout << keysInVect << endl;
+				if( keysInVect == 0 )
 				{
 					cout << "No keys in database" << endl;
 				}
 				else
 				{
-					for( int i = 0; i < numKeys; i ++)
+					for( int i = 0; i < keysInVect; i ++)
 					{
 						myDataBase >> tempKey >> tempPos >> tempLength;
-						key = tempKey.c_str();
 						theKeys.push_back(new Key( tempKey, tempPos, tempLength));
 					}
 
-					for( int i = 0; i < numKeys; i ++)
+					for( int i = 0; i < keysInVect; i ++)
 					{
 						cout << theKeys[i]->getKey() <<" "<< theKeys[i]->getPos() << " " << theKeys[i]->getLength()<< endl;
 
 					}
-
-
 				}
 				break;
 			}
@@ -136,11 +128,54 @@ void SimpleDB::connect(const char* db, const char* user, const char* password)
 		}
 	}
 
+	myDataBase.close();
+
 }
 
 void SimpleDB::synchronize()
 {
-	//stub for the synchornize method
+
+	fstream myDataBase(keyFileInUse, ios:: out | ios::in);
+	ofstream myTempFile("tempFile", ios :: out);
+	myDataBase.seekg(ios::beg);
+	string inbuf;
+
+	int length = theKeys.size();
+	cout << length << endl;
+	vector<Key*> temp = theKeys;
+	mergeSort( theKeys, temp , 0 , length -1);
+
+	while(!myDataBase.eof())
+	{
+
+			getline( myDataBase , inbuf);
+			myTempFile << inbuf << endl;
+
+		if(!inbuf.find(dataBaseInUse))
+		{
+			//add the key
+			getline(myDataBase, inbuf);
+			myTempFile << inbuf << endl;
+
+			for( int i = 0 ; i < length ; i ++)
+			{
+				myTempFile << theKeys[i]->getKey() << " " << theKeys[i]->getPos() << " " << theKeys[i]->getLength() << endl;
+			}
+
+			for ( int i = 0 ; i < length ; i ++)
+			{
+				getline(myDataBase, inbuf);
+			}
+
+		}
+
+	}
+
+	myTempFile.close();
+	myDataBase.close();
+
+	remove(keyFileInUse);
+	rename("tempFile" , keyFileInUse);
 }
 
 void SimpleDB::close()
@@ -158,13 +193,20 @@ int SimpleDB::errorNum()
 
 const string & SimpleDB::errorMessage()
 {
-	return NULL;
+	return "Invalid string input?";
 }
 
 bool SimpleDB::keyExists( const char* key)
 {
-	return false;
-	//stub for the keyExists method
+
+	if(binarySearch(theKeys, key) == -1)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
 }
 
 const char* SimpleDB::select(const char* key)
@@ -175,6 +217,7 @@ const char* SimpleDB::select(const char* key)
 
 bool SimpleDB::update( const char *key, const char *value)
 {
+
 	return false;
 }
 
@@ -196,7 +239,6 @@ bool SimpleDB::insert(const char* key , const char* value)
 		//find the next postion within the dataFile.
 		myDataFile.seekg( 0 , myDataFile.end);
 		int position = myDataFile.tellg();
-		cout << "end of data file " << position  << endl;
 
 		int length = strlen(value);
 		string inbuf;
@@ -211,13 +253,13 @@ bool SimpleDB::insert(const char* key , const char* value)
 			{
 				//add the key
 				getline(myDataBase, inbuf);
-				int num = atoi(inbuf.c_str());
-				cout << num << endl;
-				myTempFile << (num+1) << endl;
+				int keysInVect = atoi(inbuf.c_str());
+				cout << keysInVect << endl;
+				myTempFile << (keysInVect+1) << endl;
 				myTempFile << key << " "<< position << " "<< length << endl;
-
+				string keyName(key);
+				theKeys.push_back(new Key( keyName, position, length));
 			}
-
 		}
 
 		myTempFile.close();
@@ -226,11 +268,14 @@ bool SimpleDB::insert(const char* key , const char* value)
 		remove(keyFileInUse);
 		rename("tempFile" , keyFileInUse);
 
-		myDataFile << value << endl;
+		char* valueForData = strdup(value);
 
+		Algorithm::encrypt(valueForData, shift);
+
+		myDataFile << valueForData << endl;
 		myDataFile.close();
 	}
-
+	synchronize();
 	return true;
 }
 
@@ -238,7 +283,96 @@ bool SimpleDB::insert(const char* key , const char* value)
 
 bool SimpleDB::removeKey(const char* key)
 {
-	return false;
+	int index = 0 ;
+	if( !connected)
+	{
+		return false;
+	}
+	else
+	{
+		if(binarySearch(theKeys, key) == -1)
+		{
+			return false;
+		}
+		else
+		{
+			index = binarySearch(theKeys, key);
+		}
+
+		fstream myDataBase(keyFileInUse, ios:: out | ios::in);
+		ofstream myTempFile("tempFile", ios :: out);
+		fstream myDataFile;
+		myDataFile.open(dataFileInUse, ios:: out | ios:: in | ios::app);
+		ofstream myTempDataFile( "tempData", ios::out);
+
+		string inbuf;
+		myDataBase.seekg(ios::beg);
+
+		while(!myDataBase.eof())
+		{
+			getline( myDataBase , inbuf);
+			myTempFile << inbuf << endl;
+
+			if(!inbuf.find(dataBaseInUse))
+			{
+				//add the key
+				getline(myDataBase, inbuf);
+				int keysInVect = atoi(inbuf.c_str());
+				cout << keysInVect << endl;
+				myTempFile << (keysInVect -1) << endl;
+
+				for ( int i = 0 ; i < keysInVect ; i ++)
+				{
+					getline(myDataBase , inbuf);
+					if(!inbuf.find(key))
+					{
+						//getline(myDataBase, inbuf);
+						break;
+					}
+
+					myTempFile << inbuf << endl;
+				}
+			}
+		}
+
+		int position = theKeys[index]->getPos();
+		cout << position << endl;
+		int length = theKeys[index]->getLength();
+		cout << length << endl;
+		theKeys.erase(theKeys.begin()+ index);
+		int posIndex;
+
+		char charBuf;
+		while(!myDataFile.eof())
+		{
+			posIndex = myDataFile.tellg();
+
+			if(posIndex == position)
+			{
+				for( int i = 0 ; i < length; i ++)
+				{
+					myDataFile.get();
+				}
+			}
+			charBuf = myDataFile.get();
+			myTempDataFile << charBuf;
+		}
+//		myDataFile.seekp(position, myDataFile.cur);
+//		for( int i = 0 ; i < length ; i ++)
+//		{
+//			myDataFile.put(' ');
+//		}
+
+		myDataBase.close();
+		myTempFile.close();
+		myDataFile.close();
+		myTempDataFile.close();
+
+		rename("tempFile" , "keyFile2");
+
+
+	}
+	return true;
 }
 
 
