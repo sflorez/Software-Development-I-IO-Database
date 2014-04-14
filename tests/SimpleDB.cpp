@@ -1,5 +1,6 @@
 #include "SimpleDB.h"
 #include "Key.h"
+#include "Algorithm.h"
 
 using namespace std;
 
@@ -110,13 +111,13 @@ void SimpleDB::connect(const char* db, const char* user, const char* password)
 					for( int i = 0; i < numKeys; i ++)
 					{
 						myDataBase >> tempKey >> tempPos >> tempLength;
-						key = tempKey.c_str();
-						theKeys.push_back(new Key( tempKey, tempPos, tempLength));
+						//key = tempKey.c_str();
+						//theKeys.push_back(new Key( tempKey, tempPos, tempLength));
 					}
 
 					for( int i = 0; i < numKeys; i ++)
 					{
-						cout << theKeys[i]->getKey() <<" "<< theKeys[i]->getPos() << " " << theKeys[i]->getLength()<< endl;
+						//cout << theKeys[i]->getKey() <<" "<< theKeys[i]->getPos() << " " << theKeys[i]->getLength()<< endl;
 
 					}
 
@@ -240,6 +241,11 @@ bool SimpleDB::insert(const char* key , const char* value)
 bool SimpleDB::removeKey(const char* key)
 {
 	return false;
+}
+
+bool SimpleDB::getConnect()
+{
+    return connected;
 }
 
 

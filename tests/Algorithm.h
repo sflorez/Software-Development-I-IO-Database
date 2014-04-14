@@ -4,11 +4,12 @@
 #include<cstring>
 #include<string>
 #include<iostream>
+#include "SimpleDB.h"
 
 class Algorithm {
 private:
-	Algorithm();
-
+    Algorithm();
+   
     // Limit for data characters by ascii values
 	static const int ASCII_MAX = 126;
 	static const int ASCII_MIN = 32;
@@ -17,7 +18,7 @@ private:
 	static const int BASE_SHIFT = 1;
 public:
     
-	static bool decrypt(char* data, int shift);
+    static bool decrypt(char* data, int shift);
     static bool encrypt(char* data, int shift);
     virtual ~Algorithm();
 };
