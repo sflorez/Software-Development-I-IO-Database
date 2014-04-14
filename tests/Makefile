@@ -72,7 +72,7 @@ gtest_main.a : gtest-all.o gtest_main.o
 # function.
 
 SimpleDB.o : $(USER_DIR)/SimpleDB.cpp $(USER_DIR)/Key.cpp $(USER_DIR)/Algorithm.cpp $(USER_DIR)/mergeSort.cpp $(USER_DIR)/SimpleDB.h $(USER_DIR)/Key.h $(USER_DIR)/Algorithm.h $(USER_DIR)/mergeSort.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/SimpleDB.cpp $(USER_DIR)/Key.cpp $(USER_DIR)/Algorithm.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/SimpleDB.cpp $(USER_DIR)/Key.cpp $(USER_DIR)/Algorithm.cpp $(USER_DIR)/mergeSort.cpp
 
 sample_unittest.o : $(USER_DIR)/sample_unittest.cc $(USER_DIR)/SimpleDB.h $(USER_DIR)/Key.h $(USER_DIR)/Algorithm.h $(USER_DIR)/mergeSort.h $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/sample_unittest.cc
