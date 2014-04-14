@@ -5,6 +5,7 @@
 #include "Key.h"
 #include "Algorithm.h"
 #include "gtest/gtest.h"
+#include "Algorithm.cpp"
 using namespace std;
 
 
@@ -163,14 +164,16 @@ TEST_F(allTest, InsertTest)
 
 TEST_F(allTest, EncryptTest)
 {
-    char * key = "key1";
+    char* key = new char[4];
+    strcpy(key, "key1"); 
     int shift = 4;
     EncryptTest( key, shift );
 }
 
 TEST_F(allTest, DecryptTest)
 {
-    char * key = "key1";
+    char* key = new char[4];
+    strcpy(key, "key1");
     int shift = 4;
     DecryptTest( key, shift );
 }

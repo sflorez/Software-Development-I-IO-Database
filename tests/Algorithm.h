@@ -8,7 +8,7 @@
 
 class Algorithm {
 private:
-    Algorithm()
+    Algorithm();
    
     // Limit for data characters by ascii values
 	static const int ASCII_MAX = 126;
