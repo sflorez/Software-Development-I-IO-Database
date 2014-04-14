@@ -1,5 +1,0 @@
-
- ‘bool SimpleDB::removeKey(const char*)’ member function declared in class ‘SimpleDB’
-In file included from ./Key.cpp:8:
-
-Anyway we can fix this?

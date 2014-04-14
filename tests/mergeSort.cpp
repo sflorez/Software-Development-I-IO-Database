@@ -102,7 +102,8 @@ void mergeLoc(vector<Key*> &keyVector, vector<Key*> &tempStorage, int low, int p
     while((left<=pivot)&&(right<=high))
     {
         //(int)keyVector[left]->getKey()) <= ...
-        if(*keyVector[left]->getPos() < *keyVector[right]->getPos())
+        //Removed the * on the keyVector
+        if(keyVector[left]->getPos() < keyVector[right]->getPos())
         {
             tempStorage[tempLow]=keyVector[left];
             left++;
