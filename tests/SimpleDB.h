@@ -13,6 +13,7 @@
 #include <fstream>
 #include <stdlib.h>
 #include "Key.h"
+#include "Algorithm.h"
 
 class SimpleDB
 {
@@ -22,8 +23,9 @@ class SimpleDB
 	const char* keyFileInUse;
 	const char* dataFileInUse;
 	const char* dataBaseInUse;
-	bool connected;
-    std::vector<Key*> theKeys;
+	//bool connected;
+//    std::vector<Key*> theKeys;
+   // bool getConnect();
 
     public:
         /**
@@ -34,6 +36,9 @@ class SimpleDB
         static const int MAX_KEY_LENGTH = 1024;
         static const int MIN_VALUE_LENGTH = 2;
         static const int MAX_VALUE_LENGTH = (32*1024);
+        
+        bool getConnect();
+        bool connected;
 
         /**
          * Constructor to create (if the files do not exist) or use

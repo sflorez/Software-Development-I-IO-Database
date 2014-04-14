@@ -1,4 +1,5 @@
 #include "Algorithm.h"
+#include "SimpleDB.h"
 
 using namespace std;
 

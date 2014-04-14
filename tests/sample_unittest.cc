@@ -3,7 +3,7 @@
 #include <fstream>
 #include "SimpleDB.h"
 #include "Key.h"
-#include "Algorithm.h" 
+#include "Algorithm.h"
 #include "gtest/gtest.h"
 using namespace std;
 
@@ -98,14 +98,17 @@ class allTest : public testing::Test
             ASSERT_TRUE(simpleDB.insert( key, value ));
         }
         
-        /**
+       
         void EncryptTest( char * data , int shift )
         {
-            //Algorithm algorithm;
-                                  
             ASSERT_TRUE( Algorithm::encrypt( data, shift ) );
         }
-        */
+        
+        void DecryptTest( char* data , int shift )
+        {
+            ASSERT_TRUE( Algorithm::decrypt( data, shift) );
+        }
+        
 };
 
 
@@ -117,7 +120,7 @@ TEST_F(allTest, ConstructorTest)
 {
     const string &key = "keyFile";
     const string &data = "dataFile";
-    ConstructorTester( key, data );   
+    ConstructorTester( key, data );
 }
 
 /**
@@ -157,11 +160,18 @@ TEST_F(allTest, InsertTest)
     InsertTest( key, value) ;
 }
 
-/*
+
 TEST_F(allTest, EncryptTest)
 {
     char * key = "key1";
     int shift = 4;
     EncryptTest( key, shift );
 }
-*/
+
+TEST_F(allTest, DecryptTest)
+{
+    char * key = "key1";
+    int shift = 4;
+    DecryptTest( key, shift );
+}
+
