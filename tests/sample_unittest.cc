@@ -1,9 +1,11 @@
+#include <vector>
 #include <limits.h>
 #include <iostream>
 #include <fstream>
 #include "SimpleDB.h"
 #include "Key.h"
 #include "Algorithm.h"
+#include "mergeSort.h"
 #include "gtest/gtest.h"
 #include "Algorithm.cpp"
 using namespace std;
@@ -218,22 +220,26 @@ TEST_F(allTest, DecryptionAsciiBounds)
  */
 TEST_F(allTest, mergeSortTest)
 {
-    :vector<Key*> keys;
+    vector<Key*> keys;
     string name1 = "zergRush";
     string name2 = "Antonio";
     string name3 = "Sebastian";
     string name4 = "Christian";
-    
-    for(unsigned int i = 1; i < 5; i++)
-    {
-        keys.push_back(new Key(name+(string)i,1,1))
-    }
+
+    keys.push_back(new Key(name1 ,1,1));
+    keys.push_back(new Key(name2 ,1,1));
+    keys.push_back(new Key(name3 ,1,1));
+    keys.push_back(new Key(name4 ,1,1));
     for(unsigned int i = 0;i<4;i++)
     {
         cout << keys[i]->getKey() << endl;
     }
-    
+    vector<Key*> temp = keys;
+    int num = keys.size();
+    mergeSort(keys,temp,0,num-1);
+
 }
+/*
 #include<string>
 #include<cstring>
 #include <iostream>
@@ -286,3 +292,5 @@ int main()
     {
          cout << keys[binarySearch(keys, inputName.c_str())]->getKey() << endl; 
     }
+    */
+

@@ -18,8 +18,8 @@ private:
 	int position;
 	int lengthOfData;
 public:
-      
-	Key( std::string key, int pos, int length );
+
+:	Key( std::string key, int pos, int length );
 
 	/*
 	 * Return the key of the key object.

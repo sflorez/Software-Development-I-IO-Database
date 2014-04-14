@@ -76,6 +76,6 @@ SimpleDB.o : $(USER_DIR)/SimpleDB.cpp $(USER_DIR)/Key.cpp $(USER_DIR)/Algorithm.
 
 sample_unittest.o : $(USER_DIR)/sample_unittest.cc $(USER_DIR)/SimpleDB.h $(USER_DIR)/Key.h $(USER_DIR)/Algorithm.h $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/sample_unittest.cc
-	
+
 sample_unittest : SimpleDB.o sample_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
