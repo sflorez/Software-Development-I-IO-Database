@@ -130,26 +130,26 @@ void mergeLoc(vector<Key*> &keyVector, vector<Key*> &tempStorage, int low, int p
             tempLow++;
         }
     }
-      for(k=low; k<=high; k++)
-          {
-              keyVector[k]=tempStorage[k];
-          }
-  }
+    for(k=low; k<=high; k++)
+        {
+            keyVector[k]=tempStorage[k];
+        }
+}
   
 /*
  * Main mergeSort function. Sorts keys based on ASCII values in alphabetical order
 */
-  void mergeSort(vector<Key*> &keyVector, vector<Key*> &tempStorage, int low, int high)
-  {
-      int pivot;
-      if(low<high)
-      {
-          pivot=(low+high)/2;
-          mergeSort( keyVector, tempStorage,low,pivot);
-          mergeSort(keyVector,tempStorage,pivot+1,high);
-          merge(keyVector,tempStorage,low,pivot,high);
-      }
-  }
+void mergeSort(vector<Key*> &keyVector, vector<Key*> &tempStorage, int low, int high)
+{
+    int pivot
+	if(low<high)
+    {
+        pivot=(low+high)/2;
+        mergeSort( keyVector, tempStorage,low,pivot);
+        mergeSort(keyVector,tempStorage,pivot+1,high);
+        merge(keyVector,tempStorage,low,pivot,high);
+    }
+}
   
 /*
  *Secondary mergeSort function. Sorts the keys based on begining location, rather than ASCII values
@@ -172,28 +172,28 @@ void mergeSortLoc(vector<Key*> &keyVector, vector<Key*> &tempStorage, int low, i
       * Returns the int of the Key's location in the vector. 
      */
 int binarySearch(vector<Key*> &iKeyVector, const char* iKey)
-    {
-        int keyVectLength = iKeyVector.size();
-        int keyLength = strlen(iKey);
-        int low, high;
-        low = 0;
-        high = iKeyVector.size() - 1;
+{
+      int keyVectLength = iKeyVector.size();
+      int keyLength = strlen(iKey);
+      int low, high;
+      low = 0;
+      high = iKeyVector.size() - 1;
 
-        while (low <= high)
-        {
-            int mid = (low + high) / 2;
-            if (compareASCII(iKey, iKeyVector[mid]->getKey()) == 0)
-            {
-                return mid;
-            }
-            else if (compareASCII(iKey, iKeyVector[mid]->getKey()) < 0)
-            {
-                high = mid - 1;
-            }
-            else
-            {
-                low = mid + 1;
-            }
-        }
-        return -1;
+      while (low <= high)
+      {
+          int mid = (low + high) / 2;
+          if (compareASCII(iKey, iKeyVector[mid]->getKey()) == 0)
+          {
+			  return mid;
+          }
+          else if (compareASCII(iKey, iKeyVector[mid]->getKey()) < 0)
+          {
+              high = mid - 1;
+          }
+          else
+          {
+              low = mid + 1;
+          }
+      }
+   return -1;
 }
