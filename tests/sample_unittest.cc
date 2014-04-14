@@ -119,6 +119,41 @@ class allTest : public testing::Test
         {
             ASSERT_FALSE(Algorithm::encrypt(data, shift));
         }
+        
+        void KeyExistsTest( const char* key)
+        {
+            i_KeyFileName = "keyFile";
+            i_DatabaseFile = "dataFile";
+            i_db = "TestDataBase";
+            i_user = "TestUserName";
+            i_password = "TestPassword";
+            const char* i_value = "value";
+            const int shift = 4;
+            
+            SimpleDB simpleDB( i_KeyFileName, i_DatabaseFile );
+            simpleDB.connect( i_db, i_user, i_password);
+            simpleDB.create( i_db, i_user, i_password, shift );
+            simpleDB.insert( key, i_value );
+            
+            ASSERT_TRUE( simpleDB.keyExists( key ) );
+        }
+        
+        void RemoveKeyTest( const char* key )
+        {
+            i_KeyFileName = "keyFile";
+            i_DatabaseFile = "dataFile";
+            i_db = "TestDataBase";
+            i_user = "TestUserName";
+            i_password = "TestPassword";
+            const char* i_value = "value";
+            const int shift = 4;
+                       
+            SimpleDB simpleDB( i_KeyFileName, i_DatabaseFile );
+            simpleDB.connect( i_db, i_user, i_password);
+            simpleDB.create( i_db, i_user, i_password, shift );
+            simpleDB.insert( key, i_value );
+            ASSERT_TRUE( simpleDB.removeKey( key ) );
+        }
 };
 
 
@@ -215,82 +250,15 @@ TEST_F(allTest, DecryptionAsciiBounds)
     DecryptionAsciiBounds(key, shift);
 }
 
-/*
- * Tests Merge Sorting
- */
-TEST_F(allTest, mergeSortTest)
+
+TEST_F(allTest, KeyExistsTest )
 {
-    vector<Key*> keys;
-    string name1 = "zergRush";
-    string name2 = "Antonio";
-    string name3 = "Sebastian";
-    string name4 = "Christian";
-
-    keys.push_back(new Key(name1 ,1,1));
-    keys.push_back(new Key(name2 ,1,1));
-    keys.push_back(new Key(name3 ,1,1));
-    keys.push_back(new Key(name4 ,1,1));
-    for(unsigned int i = 0;i<4;i++)
-    {
-        cout << keys[i]->getKey() << endl;
-    }
-    vector<Key*> temp = keys;
-    int num = keys.size();
-    mergeSort(keys,temp,0,num-1);
-
+    const char* key = "key";
+    KeyExistsTest( key );
 }
-/*
-#include<string>
-#include<cstring>
-#include <iostream>
-#include "mergeSort.h"
-#include "Key.h"
-#include <vector>
-using namespace std;
 
-vector <Key*> keys;
-int main()
+TEST_F(allTest, RemoveKeyTest)
 {
-    string name = "name1thelongest";
-    string name2 = "sebastian";
-    string name3 = "Anton";
-    string name4 = "bleh";
-    string name5 = "bob";
-    
-    keys.push_back(new Key(name ,1,1)); 
-    keys.push_back(new Key(name2 ,1,1));
-    keys.push_back(new Key(name3 ,1,1));
-    keys.push_back(new Key(name4 ,1,1));
-    keys.push_back(new Key(name5 ,1,1));
-    
-    cout<< "B4 merge"<< endl;
-   
-    for(unsigned int i = 0; i < 5; i++ )
-    {
-        cout << keys[i]->getKey()<<endl;
-    }        
-    
-    vector<Key*> temp = keys;
-    int num = keys.size();
-    mergeSort(keys,temp,0,num-1);
-    cout<< "After merge"<<endl;
-    
-    for(unsigned int i = 0; i < 5; i++ )
-    {
-        cout << keys[i]->getKey()<<endl;
-    }        
-    string inputName;
-    cout<< "binary search enter a name to find: "<< endl;
-    cin>> inputName;
-    cout << inputName << endl;
-   
-    if(binarySearch(keys, inputName.c_str()) < 0)
-    {
-        cout << "Noooope" << endl;
-    }
-    else
-    {
-         cout << keys[binarySearch(keys, inputName.c_str())]->getKey() << endl; 
-    }
-    */
-
+    const char* key = "key";
+    RemoveKeyTest( key );
+}
