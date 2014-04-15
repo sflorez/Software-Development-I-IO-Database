@@ -9,256 +9,167 @@
 #include "gtest/gtest.h"
 #include "Algorithm.cpp"
 using namespace std;
-
-
-/**
- * Test Fixtures 
- */ 
-
-class allTest : public testing::Test 
-{
-    protected:
-        const char* i_DatabaseFile;
-        const char* i_KeyFileName;
-        const char* i_db;
-        const char* i_user;
-        const char* i_password;
-        
-        /**
-         * Has the constructor create two files, keyFile and dataFile,
-         * then tests if they are there
-         * 
-         * @params: keyFile and dataFile
-         */  
-        void ConstructorTester( const string &keyFile, const string &dataFile )
-        {
-            const char* keyFileName = keyFile.c_str();
-            const char* dataFileName = dataFile.c_str();
-            SimpleDB simpleDB( keyFileName, dataFileName );
-            ifstream file(keyFileName);
-            ifstream file1(dataFileName);
-  
-            ASSERT_TRUE(file);
-            ASSERT_TRUE(file1);
-        }
-        
-        /**
-         * 
-         * 
-         * @params: db, user, password, shift
-         */ 
-        void CreateTest( const char* db, const char* user, const char* password, const int shift )
-        { 
-            i_KeyFileName = "keyFile";
-            i_DatabaseFile = "dataFile";
-            SimpleDB simpleDB(i_KeyFileName, i_DatabaseFile);
-            simpleDB.create( db, user, password, shift );
-                   
-            string correct = "TestDataBase TestUserName TestPassword 4"; 
-                        
-            string buffer;
-            ifstream file;
-            file.open(i_KeyFileName, ios::in);
-            getline(file, buffer);
-            
-            ASSERT_EQ(correct, buffer);
-        }
-        
-        /*
-         * 
-         * @params: db, user, password
-         */
-        
-        void connectTest( const char* db, const char* user, const char* password )
-        {
-            i_KeyFileName = "keyFile";
-            i_DatabaseFile = "dataFile";
-                           
-            SimpleDB simpleDB( i_KeyFileName, i_DatabaseFile );
-            simpleDB.connect( db, user, password);
-            ASSERT_FALSE(simpleDB.getConnect());
-            
-            simpleDB.connect( db, user, password);
-            
-            ASSERT_TRUE(simpleDB.getConnect());
-        }
-        /*
-         * 
-         * 
-         * @params: key, value 
-         */ 
-        void InsertTest( const char* key , const char* value )
-        {
-            i_KeyFileName = "keyFile";
-            i_DatabaseFile = "dataFile";
-            i_db = "TestDataBase";
-            i_user = "TestUserName";
-            i_password = "TestPassword";
-            const int shift = 4;
-            SimpleDB simpleDB( i_KeyFileName, i_DatabaseFile );
-            simpleDB.connect( i_db, i_user, i_password);
-            simpleDB.create( i_db, i_user, i_password, shift );
-            ASSERT_TRUE(simpleDB.insert( key, value ));
-        }
-        
-       
-        void EncryptTest( char * data , int shift )
-        {
-            ASSERT_TRUE( Algorithm::encrypt( data, shift ) );
-        }
-        
-        void DecryptTest( char* data , int shift )
-        {
-            ASSERT_TRUE( Algorithm::decrypt( data, shift) );
-        }
-        void EncryptionAsciiBounds(char* data, int shift)
-        {
-            ASSERT_FALSE(Algorithm::encrypt(data, shift));
-        }
-         void DecryptionAsciiBounds(char* data, int shift)
-        {
-            ASSERT_FALSE(Algorithm::encrypt(data, shift));
-        }
-        
-        void KeyExistsTest( const char* key)
-        {
-            i_KeyFileName = "keyFile";
-            i_DatabaseFile = "dataFile";
-            i_db = "TestDataBase";
-            i_user = "TestUserName";
-            i_password = "TestPassword";
-            const char* i_value = "value";
-            const int shift = 4;
-            
-            SimpleDB simpleDB( i_KeyFileName, i_DatabaseFile );
-            simpleDB.connect( i_db, i_user, i_password);
-            simpleDB.create( i_db, i_user, i_password, shift );
-            simpleDB.insert( key, i_value );
-            
-            ASSERT_TRUE( simpleDB.keyExists( key ) );
-        }
-        
-        void RemoveKeyTest( const char* key )
-        {
-            i_KeyFileName = "keyFile";
-            i_DatabaseFile = "dataFile";
-            i_db = "TestDataBase";
-            i_user = "TestUserName";
-            i_password = "TestPassword";
-            const char* i_value = "value";
-            const int shift = 4;
-                       
-            SimpleDB simpleDB( i_KeyFileName, i_DatabaseFile );
-            simpleDB.connect( i_db, i_user, i_password);
-            simpleDB.create( i_db, i_user, i_password, shift );
-            simpleDB.insert( key, i_value );
-            ASSERT_TRUE( simpleDB.removeKey( key ) );
-        }
-};
-
-
+ 
 /*
  * Uses the test fixture to test the "constructorTester"
  * Using the _F alerts it to use the fixture.
  */
-TEST_F(allTest, ConstructorTest)
+TEST( SimpleDB, ConstructorTest )
 {
-    const string &key = "keyFile";
-    const string &data = "dataFile";
-    ConstructorTester( key, data );
+	const char* keyFileName = "keyFile";
+	const char* dataFileName = "dataFile";
+    SimpleDB simpleDB( keyFileName, dataFileName );
+    ifstream file(keyFileName);
+    ifstream file1(dataFileName);
+  
+    ASSERT_TRUE(file);
+    ASSERT_TRUE(file1);
 }
 
 /*
- * Calls the "connectTest"
+ * Calls the "CreateTest"
  */
-TEST_F(allTest, connectTest)
+TEST( SimpleDB, CreateTest )
 {
     const char* db = "TestDataBase";
     const char* user = "TestUserName";
     const char* password = "TestPassword";
-    connectTest( db, user, password );
+    const char* keyFileName = "keyFile";
+	const char* dataBaseFile = "dataFile";
+	string correct = "TestDataBase TestUserName TestPassword 4"; 
+
+    SimpleDB simpleDB(keyFileName, dataBaseFile);
+    simpleDB.create( db, user, password, shift );
+                  
+    string buffer;
+    ifstream file;
+    file.open( i_KeyFileName, ios::in );
+    getline( file, buffer );
+            
+    ASSERT_EQ( correct, buffer );
 }
 
-
 /*
- * Calls the "CreateTest" in the fixture
+ * Calls the "ConnectTest" 
  */
 
-TEST_F(allTest, CreateTest)
+TEST( SimpleDB, ConnectTest )
 {
     const char* dataBase = "TestDataBase";
     const char* user = "TestUserName";
     const char* password = "TestPassword";
+	const char* keyFileName = "keyFile";
+	const char* dataBaseFile = "dataFile";
     const int shift = 4;
-    CreateTest( dataBase, user, password, shift);
+                           
+    SimpleDB simpleDB( keyFileName, dataBaseFile );
+    simpleDB.connect( db, user, password);
+    ASSERT_FALSE( simpleDB.getConnect() );
+    simpleDB.connect( db, user, password );
+    ASSERT_TRUE( simpleDB.getConnect() );
 }
 
 /*
  * Called the "insert" in the fixture
  */
 
-TEST_F(allTest, InsertTest)
+TEST( SimpleDB, InsertTest )
 {
     const char* key = "key";
     const char* value = "value";
-    InsertTest( key, value) ;
+   	const char* db = "TestDataBase";
+    const char* user = "TestUserName";
+    const char* password = "TestPassword";
+    const char* keyFileName = "keyFile";
+	const char* dataBaseFile = "dataFile";
+	
+    const int shift = 4;
+    SimpleDB simpleDB( keyFileName, dataBaseFile );
+    simpleDB.connect( db, user, password);
+    simpleDB.create( db, user, password, shift );
+    ASSERT_TRUE( simpleDB.insert( key, value ) );
 }
 
 /*
  * Tests Encryption to passes with correct inputs
  */
-TEST_F(allTest, EncryptTest)
+TEST( AlgorithmTest, EncryptTest )
 {
     char* key = new char[4];
     strcpy(key, "key1");
     int shift = 4;
-    EncryptTest( key, shift );
+    ASSERT_TRUE( Algorithm::encrypt( data, shift ) );
 }
 
 /*
  * Tests if encryption passes with correct inputs
  */
-TEST_F(allTest, DecryptTest)
+TEST( AlgorithmTest, DecryptTest )
 {
     char* key = new char[4];
     strcpy(key, "key1");
     int shift = 4;
-    DecryptTest( key, shift );
+	ASSERT_TRUE( Algorithm::decrypt( data, shift) );
 }
 
 /*
  * Tests the bounds of the ascii values are within
  * 32-126
  */
-TEST_F(allTest, EncryptionAsciiBounds)
+TEST( AlgorithmTest, EncryptionAsciiBounds )
 {
     char* key = new char[7];
     strcpy(key,"áBadKey");
     int shift = 3;
-    EncryptionAsciiBounds(key, shift);
+    ASSERT_FALSE( Algorithm::encrypt( data, shift ) );
 }
 
 /*
  * Tests the bounds of the ascii values are within
  * 32-126
  */
-TEST_F(allTest, DecryptionAsciiBounds)
+TEST( AlgorithmTest, DecryptionAsciiBounds )
 {
     char* key = new char[7];
     strcpy(key, "áBadKey");
     int shift = 3;
-    DecryptionAsciiBounds(key, shift);
+    ASSERT_FALSE( Algorithm::encrypt( data, shift ) );
 }
 
 
-TEST_F(allTest, KeyExistsTest )
+TEST( KeyTest, RemoveKeyTest )
 {
     const char* key = "key";
-    KeyExistsTest( key );
+    const char* db = "TestDataBase";
+    const char* user = "TestUserName";
+    const char* password = "TestPassword";
+    const char* keyFileName = "keyFile";
+	const char* dataBaseFile = "dataFile";
+    const char* i_value = "value";
+    const int shift = 4;
+                       
+	SimpleDB simpleDB( i_KeyFileName, i_DatabaseFile );
+    simpleDB.connect( i_db, i_user, i_password);
+    simpleDB.create( i_db, i_user, i_password, shift );
+    simpleDB.insert( key, i_value );
+    ASSERT_TRUE( simpleDB.removeKey( key ) );
 }
 
-TEST_F(allTest, RemoveKeyTest)
+TEST( KeyTest, KeyExistsTest )
 {
     const char* key = "key";
-    RemoveKeyTest( key );
+    const char* db = "TestDataBase";
+    const char* user = "TestUserName";
+    const char* password = "TestPassword";
+    const char* keyFileName = "keyFile";
+	const char* dataBaseFile = "dataFile";
+    const char* i_value = "value";
+    const int shift = 4;
+            
+    SimpleDB simpleDB( keyFileName, dataBaseFile );
+    simpleDB.connect( db, user, password );
+    simpleDB.create( db, user, password, shift );
+    simpleDB.insert( key, i_value );
+            
+    ASSERT_TRUE( simpleDB.keyExists( key ) );
 }
