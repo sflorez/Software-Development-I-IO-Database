@@ -181,7 +181,7 @@ void SimpleDB::synchronize()
 void SimpleDB::close()
 {
 	//stub for the close method should close out of the current database
-	synchronize();
+	//synchronize();
 	connected = false;
 }
 
@@ -211,14 +211,88 @@ bool SimpleDB::keyExists( const char* key)
 
 const char* SimpleDB::select(const char* key)
 {
-	return NULL;
-	//stub for the select method
+	int index = 0;
+	if(binarySearch( theKeys, key)==-1)
+	{
+		cout << "key not found" << endl;
+		return NULL;
+	}
+	else
+	{
+		index = binarySearch(theKeys, key);
+	}
+
+	int position = theKeys[index]->getPos();
+	cout << "position: " << position << endl;
+	int length = theKeys[index]->getLength();
+	cout << "length: " << length << endl;
+
+	char* buf;
+
+	fstream myDataFile( dataFileInUse, ios:: in);
+
+	myDataFile.seekg(0 , myDataFile.beg);
+	myDataFile.seekg(position , myDataFile.cur);
+	myDataFile.read(buf, length);
+
+	Algorithm::decrypt(buf,shift);
+
+	cout << buf << endl;
+
+	return buf;
 }
 
 bool SimpleDB::update( const char *key, const char *value)
 {
+	    int index = 0;
+	    int valueLength = strlen(value);
 
-	return false;
+		if(binarySearch( theKeys, key) == -1)
+		{
+			cout << "key not found" << endl;
+			return false;
+		}
+		else
+		{
+			index = binarySearch(theKeys, key);
+		}
+
+		if( valueLength > theKeys[index]->getLength())
+		{
+			cout << " value is longer than space available" << endl;
+			return false;
+		}
+		else
+		{
+			fstream myDataFile;
+			myDataFile.open(dataFileInUse, ios:: out | ios:: in | ios::app);
+			ofstream myTempDataFile( "tempData2", ios::out);
+
+			int position = theKeys[index]->getPos();
+			cout << position << endl;
+			int length = theKeys[index]->getLength();
+			cout << length << endl;
+			theKeys.erase(theKeys.begin()+ index);
+			int posIndex;
+
+			char charBuf;
+			while(!myDataFile.eof())
+			{
+				posIndex = myDataFile.tellg();
+
+				if(posIndex == position)
+				{
+					for( int i = 0 ; i < valueLength; i ++)
+					{
+						myDataFile.get();
+						myTempDataFile.put(value[i]);
+					}
+				}
+				charBuf = myDataFile.get();
+				myTempDataFile << charBuf;
+			}
+		}
+		return true;
 }
 
 bool SimpleDB::insert(const char* key , const char* value)
@@ -352,6 +426,7 @@ bool SimpleDB::removeKey(const char* key)
 				for( int i = 0 ; i < length; i ++)
 				{
 					myDataFile.get();
+					myTempDataFile.put('\0');
 				}
 			}
 			charBuf = myDataFile.get();
@@ -374,6 +449,5 @@ bool SimpleDB::removeKey(const char* key)
 	}
 	return true;
 }
-
 
 
