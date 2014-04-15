@@ -17,7 +17,7 @@ private:
 	std::string keyName;
 	int position;
 	int lengthOfData;
-public:
+public: 
 
 	Key( std::string key, int pos, int length );
 

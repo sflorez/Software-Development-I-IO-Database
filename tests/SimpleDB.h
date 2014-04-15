@@ -13,8 +13,6 @@
 #include <fstream>
 #include <stdlib.h>
 #include "Key.h"
-#include "Algorithm.h"
-
 class SimpleDB
 {
 	private:
@@ -23,11 +21,12 @@ class SimpleDB
 	const char* keyFileInUse;
 	const char* dataFileInUse;
 	const char* dataBaseInUse;
-	//bool connected;
-//    std::vector<Key*> theKeys;
-   // bool getConnect();
+	bool connected;
+	std::vector<Key*> theKeys;
+	int keysInVect;
 
     public:
+        
         /**
          * Minimum and maximum length of key and value strings,
          * including '\0' terminator.
@@ -36,9 +35,6 @@ class SimpleDB
         static const int MAX_KEY_LENGTH = 1024;
         static const int MIN_VALUE_LENGTH = 2;
         static const int MAX_VALUE_LENGTH = (32*1024);
-        
-        bool getConnect();
-        bool connected;
 
         /**
          * Constructor to create (if the files do not exist) or use
@@ -62,7 +58,7 @@ class SimpleDB
          * The failed error number and message may be accessed using
          * errorNum() and errorMessage() thereafter.
          */
-        void create(const char* db, const char* user, const char* password, const int shift);
+        void create(const char* db, const char* user, const char* password, int shift);
 
         /**
          * Connect to existing database with given name and credentials.
@@ -167,6 +163,8 @@ class SimpleDB
          * @return true for success, false for failure.
          */
         bool removeKey(const char *key);
+        
+        bool getConnect();
 };
 
 #endif
