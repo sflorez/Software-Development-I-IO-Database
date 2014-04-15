@@ -15,6 +15,9 @@ Key::Key( string key, int pos, int length  )
 	lengthOfData = length;
 }
 
+/*
+ * Rerturns a constant character from a string
+ */
 const char* Key::getKey()
 {
 	return keyName.c_str();
@@ -45,12 +48,8 @@ void Key::setLength(int length)
 	lengthOfData = length;
 }
 
-long Key::getAsciiValue()
-{
-	return 0;
-}
-
-Key::~Key() {
-	// TODO Auto-generated destructor stub
-}
+/*
+ * Destructor
+ */
+Key::~Key() {}
 

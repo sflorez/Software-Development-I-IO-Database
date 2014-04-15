@@ -7,7 +7,6 @@
 #include "Algorithm.h"
 #include "mergeSort.h"
 #include "gtest/gtest.h"
-#include "Algorithm.cpp"
 using namespace std;
  
 /*
@@ -36,6 +35,7 @@ TEST( SimpleDB, CreateTest )
     const char* password = "TestPassword";
     const char* keyFileName = "keyFile";
 	const char* dataBaseFile = "dataFile";
+    const int shift = 4;
 	string correct = "TestDataBase TestUserName TestPassword 4"; 
 
     SimpleDB simpleDB(keyFileName, dataBaseFile);
@@ -43,7 +43,7 @@ TEST( SimpleDB, CreateTest )
                   
     string buffer;
     ifstream file;
-    file.open( i_KeyFileName, ios::in );
+    file.open( keyFileName, ios::in );
     getline( file, buffer );
             
     ASSERT_EQ( correct, buffer );
@@ -55,13 +55,12 @@ TEST( SimpleDB, CreateTest )
 
 TEST( SimpleDB, ConnectTest )
 {
-    const char* dataBase = "TestDataBase";
+    const char* db = "TestDataBase";
     const char* user = "TestUserName";
     const char* password = "TestPassword";
-	const char* keyFileName = "keyFile";
-	const char* dataBaseFile = "dataFile";
-    const int shift = 4;
-                           
+    const char* keyFileName = "keyFile";
+    const char* dataBaseFile = "dataFile";
+ 
     SimpleDB simpleDB( keyFileName, dataBaseFile );
     simpleDB.connect( db, user, password);
     ASSERT_FALSE( simpleDB.getConnect() );
@@ -95,8 +94,8 @@ TEST( SimpleDB, InsertTest )
  */
 TEST( AlgorithmTest, EncryptTest )
 {
-    char* key = new char[4];
-    strcpy(key, "key1");
+    char* data = new char[4];
+    strcpy(data, "key1");
     int shift = 4;
     ASSERT_TRUE( Algorithm::encrypt( data, shift ) );
 }
@@ -106,8 +105,8 @@ TEST( AlgorithmTest, EncryptTest )
  */
 TEST( AlgorithmTest, DecryptTest )
 {
-    char* key = new char[4];
-    strcpy(key, "key1");
+    char* data = new char[4];
+    strcpy(data, "key1");
     int shift = 4;
 	ASSERT_TRUE( Algorithm::decrypt( data, shift) );
 }
@@ -118,8 +117,8 @@ TEST( AlgorithmTest, DecryptTest )
  */
 TEST( AlgorithmTest, EncryptionAsciiBounds )
 {
-    char* key = new char[7];
-    strcpy(key,"áBadKey");
+    char* data = new char[7];
+    strcpy(data,"áBadKey");
     int shift = 3;
     ASSERT_FALSE( Algorithm::encrypt( data, shift ) );
 }
@@ -130,8 +129,8 @@ TEST( AlgorithmTest, EncryptionAsciiBounds )
  */
 TEST( AlgorithmTest, DecryptionAsciiBounds )
 {
-    char* key = new char[7];
-    strcpy(key, "áBadKey");
+    char* data = new char[7];
+    strcpy(data, "áBadKey");
     int shift = 3;
     ASSERT_FALSE( Algorithm::encrypt( data, shift ) );
 }
@@ -145,13 +144,13 @@ TEST( KeyTest, RemoveKeyTest )
     const char* password = "TestPassword";
     const char* keyFileName = "keyFile";
 	const char* dataBaseFile = "dataFile";
-    const char* i_value = "value";
+    const char* value = "value";
     const int shift = 4;
                        
-	SimpleDB simpleDB( i_KeyFileName, i_DatabaseFile );
-    simpleDB.connect( i_db, i_user, i_password);
-    simpleDB.create( i_db, i_user, i_password, shift );
-    simpleDB.insert( key, i_value );
+	SimpleDB simpleDB( keyFileName, dataBaseFile );
+    simpleDB.connect( db, user, password);
+    simpleDB.create( db, user, password, shift );
+    simpleDB.insert( key, value );
     ASSERT_TRUE( simpleDB.removeKey( key ) );
 }
 
@@ -163,13 +162,13 @@ TEST( KeyTest, KeyExistsTest )
     const char* password = "TestPassword";
     const char* keyFileName = "keyFile";
 	const char* dataBaseFile = "dataFile";
-    const char* i_value = "value";
+    const char* value = "value";
     const int shift = 4;
             
     SimpleDB simpleDB( keyFileName, dataBaseFile );
     simpleDB.connect( db, user, password );
     simpleDB.create( db, user, password, shift );
-    simpleDB.insert( key, i_value );
+    simpleDB.insert( key, value );
             
     ASSERT_TRUE( simpleDB.keyExists( key ) );
 }

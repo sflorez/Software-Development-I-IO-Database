@@ -23,4 +23,4 @@ public:
     virtual ~Algorithm();
 };
 
-#endif /* ALGORITHM_H_ */
+#endif
