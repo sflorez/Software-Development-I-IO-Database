@@ -292,6 +292,9 @@ bool SimpleDB::update( const char *key, const char *value)
 				myTempDataFile << charBuf;
 			}
 		}
+
+		remove( dataFileInUse);
+		rename( "tempData2" , dataFileInUse);
 		return true;
 }
 
@@ -443,7 +446,11 @@ bool SimpleDB::removeKey(const char* key)
 		myDataFile.close();
 		myTempDataFile.close();
 
-		rename("tempFile" , "keyFile2");
+		remove( keyFileInUse);
+		rename("tempFile" , keyFileInUse);
+
+		remove( dataFileInUse);
+		rename( "tempData" , dataFileInUse);
 
 
 	}
