@@ -216,6 +216,7 @@ const char* SimpleDB::select(const char* key)
 	if(binarySearch( theKeys, key)==-1)
 	{
 		cout << "key not found" << endl;
+        return NULL;
 	}
 	else
 	{
