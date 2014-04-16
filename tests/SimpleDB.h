@@ -13,6 +13,7 @@
 #include <fstream>
 #include <stdlib.h>
 #include "Key.h"
+#include "Algorithm.h"
 class SimpleDB
 {
 	private:

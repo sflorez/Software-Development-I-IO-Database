@@ -9,6 +9,11 @@
 #include "Key.h"
 
 /*
+ * Member function used in mergeSort(), compares ASCII values of const char* input
+*/
+int compareASCII( const char *iKey1, const char *iKey2 );
+
+/*
 *	Member function that is called by mergeSort() to merge values
 */
 void merge( std::vector<Key*> &keyVector, std::vector<Key*> &tempStorage, int low, int pivot, int high);
@@ -17,6 +22,16 @@ void merge( std::vector<Key*> &keyVector, std::vector<Key*> &tempStorage, int lo
 *	Member function to sort the vector of keys for the current database
 */
 void mergeSort(std::vector<Key*> &keyVector, std::vector<Key*> &tempStorage, int low, int high);
+
+/*
+ * Member function called by mergeSortLoc() to merge keys 
+*/
+void mergeLoc(std::vector<Key*> &keyVector, std::vector<Key*> &tempStorage, int low, int high);
+
+/*
+ * Member function to sort keys based on location in the database
+*/
+void mergeSortLoc(std::vector<Key*> &keyVector, std::vector<Key*> &tempStorage, int low, int high);
 
 /*
 *	Member function to search through the sorted vector of keys by their length, and

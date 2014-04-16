@@ -10,15 +10,14 @@
 
 #include <iostream>
 #include <string>
-#include "SimpleDB.h"
+
 class Key {
 
 private:
 	std::string keyName;
 	int position;
 	int lengthOfData;
-public: 
-
+public:
 	Key( std::string key, int pos, int length );
 
 	/*
@@ -76,4 +75,4 @@ public:
 	virtual ~Key();
 };
 
-#endif /* KEY_H_ */
+#endif
