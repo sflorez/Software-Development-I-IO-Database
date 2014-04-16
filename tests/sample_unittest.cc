@@ -63,10 +63,10 @@ TEST( AllTest, ConnectTest )
     const char* dataBaseFile = "dataFile";
  
     SimpleDB simpleDB( keyFileName, dataBaseFile );
-   // simpleDB.connect( db, user, password);
     ASSERT_FALSE( simpleDB.getConnect() );
-    simpleDB.connect( db, user, password );
+    simpleDB.connect( db, user, password); 
     ASSERT_TRUE( simpleDB.getConnect() );
+    simpleDB.close();
 }
 
 
@@ -74,7 +74,7 @@ TEST( AllTest, ConnectTest )
  * Called the "insert" in the fixture
  */
 
-/**
+
 TEST( AllTest, InsertTest )
 {
     const char* key = "key";
@@ -88,10 +88,12 @@ TEST( AllTest, InsertTest )
     const int shift = 4;
     SimpleDB simpleDB( keyFileName, dataBaseFile );
     simpleDB.connect( db, user, password);
+    //cout << "Going into create " << endl;
     simpleDB.create( db, user, password, shift );
+    //cout << "Out of create" << endl;
     ASSERT_TRUE( simpleDB.insert( key, value ) );
 }
-*/
+
 
 /*
  * Tests Encryption to passes with correct inputs
