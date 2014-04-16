@@ -10,8 +10,7 @@
 using namespace std;
  
 /*
- * Uses the test fixture to test the "constructorTester"
- * Using the _F alerts it to use the fixture.
+ * Tests the SimpleDB constructor to make sure that it creates the files
  */
 
 TEST( AllTest, ConstructorTest )
@@ -27,7 +26,7 @@ TEST( AllTest, ConstructorTest )
 }
 
 /*
- * Calls the "CreateTest"
+ * Tests the create function, to see if creating a new database works.
  */
 TEST( AllTest, CreateTest )
 {
@@ -51,7 +50,8 @@ TEST( AllTest, CreateTest )
 }
 
 /*
- * Calls the "ConnectTest" 
+ * Attempts to connect to the database after it has been declared
+ * If it works, will return true; else false
  */
 
 TEST( AllTest, ConnectTest )
@@ -61,8 +61,11 @@ TEST( AllTest, ConnectTest )
     const char* password = "TestPassword";
     const char* keyFileName = "keyFile";
     const char* dataBaseFile = "dataFile";
+    const int shift = 4;
  
     SimpleDB simpleDB( keyFileName, dataBaseFile );
+    
+    simpleDB.create( db, user, password, shift );
     ASSERT_FALSE( simpleDB.getConnect() );
     simpleDB.connect( db, user, password); 
     ASSERT_TRUE( simpleDB.getConnect() );
@@ -71,13 +74,12 @@ TEST( AllTest, ConnectTest )
 
 
 /*
- * Called the "insert" in the fixture
+ * Tests to make sure the insert function
+ * Inserted something into the file
  */
-
-
 TEST( AllTest, InsertTest )
 {
-    const char* key = "key";
+    const char* key = "This is a key";
     const char* value = "value";
    	const char* db = "TestDataBase";
     const char* user = "TestUserName";
@@ -87,11 +89,10 @@ TEST( AllTest, InsertTest )
 	
     const int shift = 4;
     SimpleDB simpleDB( keyFileName, dataBaseFile );
-    simpleDB.connect( db, user, password);
-    //cout << "Going into create " << endl;
     simpleDB.create( db, user, password, shift );
-    //cout << "Out of create" << endl;
+    simpleDB.connect( db, user, password);
     ASSERT_TRUE( simpleDB.insert( key, value ) );
+    simpleDB.close();
 }
 
 
@@ -142,6 +143,9 @@ TEST( AllTest, DecryptionAsciiBounds )
 }
 
 /**
+ * Attemps to remove the key that was just inserted into
+ * the code
+ */
 TEST( AllTest, RemoveAllKeysTest )
 {
     const char* key = "key";
@@ -158,10 +162,13 @@ TEST( AllTest, RemoveAllKeysTest )
     simpleDB.create( db, user, password, shift );
     simpleDB.insert( key, value );
     ASSERT_TRUE( simpleDB.removeKey( key ) );
+    simpleDB.close();
 }
-*/
 
 /**
+ * Makes sure the key that was just created,
+ * is in the SimpleDB
+ */
 TEST( AllTest, KeyExistsTest )
 {
     const char* key = "key";
@@ -179,9 +186,13 @@ TEST( AllTest, KeyExistsTest )
     simpleDB.insert( key, value );
             
     ASSERT_TRUE( simpleDB.keyExists( key ) );
+    simpleDB.close();
 }
-*/
 
+/**
+ * Makes sure the file is closed and you
+ * are disconnected from the database
+ */
 TEST( AllTest, CloseTest )
 {
     const char* key = "key";
@@ -203,6 +214,9 @@ TEST( AllTest, CloseTest )
     ASSERT_FALSE( simpleDB.getConnect() );
 }
 
+/**
+ * Checks if you can select the key that was just entered
+ */
 TEST( AllTest, SelectTest)
 {
     const char* key = "key";
@@ -217,12 +231,16 @@ TEST( AllTest, SelectTest)
     SimpleDB simpleDB( keyFileName, dataBaseFile );
     simpleDB.connect( db, user, password );
     simpleDB.create( db, user, password, shift );
-    //simpleDB.insert( key, value );
+    simpleDB.insert( key, value );
     
     ASSERT_EQ( key, simpleDB.select( key ) );
+    simpleDB.close();
     
 }
 
+/**
+ * Attemps to update the key that was just entered
+ */
 TEST( AllTest, UpdateTest )
 {
     const char* key = "key";
@@ -234,22 +252,47 @@ TEST( AllTest, UpdateTest )
     const char* value = "value";
     const int shift = 4;
             
+    const char* keyTest = "keyTest";
+    const char* valueTest = "valueTest";
     SimpleDB simpleDB( keyFileName, dataBaseFile );
     simpleDB.connect( db, user, password );
     simpleDB.create( db, user, password, shift );
     
-    ASSERT_TRUE( simpleDB.update( key, value ) );
+    ASSERT_TRUE( simpleDB.update( keyTest, valueTest ) );
+    simpleDB.close();
 }
 
+/**
+ * Checks that error message of the test
+ */
+TEST( AllTest, errorMessageTest )
+{
+    const char* keyFileName = "keyFile";
+    const char* dataBaseFile = "dataFile";
+    string message = "Invalid string input?"; 
+    SimpleDB simpleDB( keyFileName, dataBaseFile );
+    ASSERT_EQ( message, simpleDB.errorMessage() );
+}
+  
+
+/**
+ * Checks the getKey function in the key.cpp
+ * by inserting a new key, and getting it.
+ */
 TEST( AllTest, KeyGetTest)
 {
     string keyName = "key";
     int pos = 1;
     int length = 3;
-    Key  key( keyName, pos, length );
+    Key key( keyName, pos, length );
     ASSERT_EQ( keyName, key.getKey() );
 }
 
+
+/**
+ * Checks if the key really set,
+ * by calling the get
+ */
 TEST( AllTest, KeySetTest)
 {
     string keyName = "key";
@@ -262,6 +305,10 @@ TEST( AllTest, KeySetTest)
 }
 
 
+/**
+ * Checks the key get and set postition functions
+ * in the key.cpp
+ */
 TEST( AllTest, KeyGetSetPosTest )
 {
     string keyName = "key";
@@ -274,6 +321,10 @@ TEST( AllTest, KeyGetSetPosTest )
     ASSERT_EQ( 5, key.getPos() );
 }
 
+/**
+ * Checks the key get and set length functions
+ * in the key.cpp
+ */
 TEST( AllTest, KeyGetSetLenTest )
 {
     string keyName = "key";
@@ -286,12 +337,14 @@ TEST( AllTest, KeyGetSetLenTest )
     ASSERT_EQ( 5, key.getLength() );
 }
  
+/**
+ * Checks the mergesortcompare by ASCII function
+ * in merge sort
+ */
 TEST( AllTest, MergeSortCompare )
 {
    const char* key1 = "a";
    const char* key2 = "b";
-   
-//   mergeSort merge();
    ASSERT_EQ( -1, compareASCII( key1, key2 ) );
    
    const char* key3 = "b";
@@ -302,4 +355,6 @@ TEST( AllTest, MergeSortCompare )
    const char* key6 = "a";
    ASSERT_EQ( 0, compareASCII( key5, key6 ) );
 }
+
+ 
 
