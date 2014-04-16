@@ -278,19 +278,19 @@ TEST( Key, KeyGetSetLenTest )
  
 TEST( MergeSort, MergeSortCompare )
 {
-   const char* key1 = a;
-   const char* key2 = b;
+   const char* key1 = "a";
+   const char* key2 = "b";
    
-   mergeSort merge();
-   ASSERT_EQ( -1, merge.compareASCII( key1, key2 ) );
+//   mergeSort merge();
+   ASSERT_EQ( -1, compareASCII( key1, key2 ) );
    
-   const char* key3 = b;
-   const char* key4 = a;
-   ASSERT_EQ( 1, merge.compareASCII( key3, key4 ) );
+   const char* key3 = "b";
+   const char* key4 = "a";
+   ASSERT_EQ( 1, compareASCII( key3, key4 ) );
   
-   const char* key5 = a;
-   const char* key6 = a;
-   ASSERT_EQ( 0, merge.compareASCII( key5, key6 ) );
+   const char* key5 = "a";
+   const char* key6 = "a";
+   ASSERT_EQ( 0, compareASCII( key5, key6 ) );
 }
 
    
