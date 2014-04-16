@@ -13,7 +13,7 @@
 #include <fstream>
 #include <stdlib.h>
 #include "Key.h"
-#include "Algorithm.h"
+
 class SimpleDB
 {
 	private:
@@ -27,7 +27,6 @@ class SimpleDB
 	int keysInVect;
 
     public:
-        
         /**
          * Minimum and maximum length of key and value strings,
          * including '\0' terminator.
@@ -164,8 +163,6 @@ class SimpleDB
          * @return true for success, false for failure.
          */
         bool removeKey(const char *key);
-        
-        bool getConnect();
 };
 
 #endif
