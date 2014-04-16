@@ -193,7 +193,7 @@ int SimpleDB::errorNum()
 
 const string & SimpleDB::errorMessage()
 {
-	return "Invalid string input?";
+	return "Invalid string input";
 }
 
 bool SimpleDB::keyExists( const char* key)
@@ -227,7 +227,8 @@ const char* SimpleDB::select(const char* key)
 	int length = theKeys[index]->getLength();
 	cout << "length: " << length << endl;
 
-	char* buf;
+//	char* buf = new char();
+    char* buf = new char[length];
 
 	fstream myDataFile( dataFileInUse, ios:: in);
 
