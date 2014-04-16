@@ -184,7 +184,8 @@ void SimpleDB::close()
 	//synchronize();
 	connected = false;
 }
-
+/*
+ * we decided not to handle out DB exceptions like this
 int SimpleDB::errorNum()
 {
 	// stub for the errorNum method
@@ -195,7 +196,7 @@ const string & SimpleDB::errorMessage()
 {
 	return "Invalid string input";
 }
-
+*/
 bool SimpleDB::keyExists( const char* key)
 {
 
@@ -215,7 +216,6 @@ const char* SimpleDB::select(const char* key)
 	if(binarySearch( theKeys, key)==-1)
 	{
 		cout << "key not found" << endl;
-		return NULL;
 	}
 	else
 	{
@@ -227,8 +227,7 @@ const char* SimpleDB::select(const char* key)
 	int length = theKeys[index]->getLength();
 	cout << "length: " << length << endl;
 
-//	char* buf = new char();
-    char* buf = new char[length];
+	char* buf = new char();
 
 	fstream myDataFile( dataFileInUse, ios:: in);
 
