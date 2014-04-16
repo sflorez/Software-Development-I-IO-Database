@@ -19,6 +19,16 @@ void merge( std::vector<Key*> &keyVector, std::vector<Key*> &tempStorage, int lo
 void mergeSort(std::vector<Key*> &keyVector, std::vector<Key*> &tempStorage, int low, int high);
 
 /*
+ * Member function called by mergeSortLoc() to merge keys 
+*/
+void mergeLoc(std::vector<Key*> &keyVector, std::vector<Key*> &tempStorage, int low, int high);
+
+/*
+ * Member function to sort keys based on location in the database
+*/
+void mergeSortLoc(std::vector<Key*> &keyVector, std::vector<Key*> &tempStorage, int low, int high);
+
+/*
 *	Member function to search through the sorted vector of keys by their length, and
 *	returns the key's location in the vector
 */
