@@ -276,3 +276,21 @@ TEST( Key, KeyGetSetLenTest )
     ASSERT_EQ( 5, key.getLength() );
 }
  
+TEST( MergeSort, MergeSortCompare )
+{
+   const char* key1 = a;
+   const char* key2 = b;
+   
+   mergeSort merge();
+   ASSERT_EQ( -1, merge.compareASCII( key1, key2 ) );
+   
+   const char* key3 = b;
+   const char* key4 = a;
+   ASSERT_EQ( 1, merge.compareASCII( key3, key4 ) );
+  
+   const char* key5 = a;
+   const char* key6 = a;
+   ASSERT_EQ( 0, merge.compareASCII( key5, key6 ) );
+}
+
+   
