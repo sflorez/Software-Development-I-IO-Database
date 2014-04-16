@@ -41,7 +41,7 @@ GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h \
 all : $(TESTS)
 
 clean :
-	rm -f $(TESTS) gtest.a gtest_main.a *.o dataFile keyFile
+	rm -f $(TESTS) gtest.a gtest_main.a *.o dataFile keyFile Test* tempFile
 
 # Builds gtest.a and gtest_main.a.
 

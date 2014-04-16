@@ -136,7 +136,7 @@ TEST( AlgorithmTest, DecryptionAsciiBounds )
 }
 
 
-TEST( KeyTest, RemoveKeyTest )
+TEST( SimpleDB, RemoveKeyTest )
 {
     const char* key = "key";
     const char* db = "TestDataBase";
@@ -154,7 +154,7 @@ TEST( KeyTest, RemoveKeyTest )
     ASSERT_TRUE( simpleDB.removeKey( key ) );
 }
 
-TEST( KeyTest, KeyExistsTest )
+TEST( SimpleDB, KeyExistsTest )
 {
     const char* key = "key";
     const char* db = "TestDataBase";
@@ -172,3 +172,63 @@ TEST( KeyTest, KeyExistsTest )
             
     ASSERT_TRUE( simpleDB.keyExists( key ) );
 }
+
+TEST( SimpleDB, CloseTest )
+{
+    const char* key = "key";
+    const char* db = "TestDataBase";
+    const char* user = "TestUserName";
+    const char* password = "TestPassword";
+    const char* keyFileName = "keyFile";
+	const char* dataBaseFile = "dataFile";
+    const char* value = "value";
+    const int shift = 4;
+            
+    SimpleDB simpleDB( keyFileName, dataBaseFile );
+    simpleDB.connect( db, user, password );
+    simpleDB.create( db, user, password, shift );
+    ASSERT_TRUE( simpleDB.getConnect() );
+    
+    simpleDB.close();
+    
+    ASSERT_FALSE( simpleDB.getConnect() );
+}
+
+TEST( SimpleDB, SelectTest)
+{
+    const char* key = "key";
+    const char* db = "TestDataBase";
+    const char* user = "TestUserName";
+    const char* password = "TestPassword";
+    const char* keyFileName = "keyFile";
+	const char* dataBaseFile = "dataFile";
+    const char* value = "value";
+    const int shift = 4;
+            
+    SimpleDB simpleDB( keyFileName, dataBaseFile );
+    simpleDB.connect( db, user, password );
+    simpleDB.create( db, user, password, shift );
+    simpleDB.insert( key, value );
+    
+    ASSERT_EQ( key, simpleDB.select( key ) );
+    
+}
+
+TEST( SimpleDB, UpdateTest )
+{
+    const char* key = "key";
+    const char* db = "TestDataBase";
+    const char* user = "TestUserName";
+    const char* password = "TestPassword";
+    const char* keyFileName = "keyFile";
+	const char* dataBaseFile = "dataFile";
+    const char* value = "value";
+    const int shift = 4;
+            
+    SimpleDB simpleDB( keyFileName, dataBaseFile );
+    simpleDB.connect( db, user, password );
+    simpleDB.create( db, user, password, shift );
+    
+    ASSERT_TRUE( simpleDB.update( key, value ) );
+}
+ 
