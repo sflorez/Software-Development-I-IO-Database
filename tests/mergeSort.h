@@ -12,6 +12,7 @@
  * Member function used in mergeSort(), compares ASCII values of const char* input
 */
 int compareASCII( const char *iKey1, const char *iKey2 );
+
 /*
 *	Member function that is called by mergeSort() to merge values
 */

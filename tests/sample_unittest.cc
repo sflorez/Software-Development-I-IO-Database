@@ -1,4 +1,5 @@
 #include <vector>
+#include <string>
 #include <limits.h>
 #include <iostream>
 #include <fstream>
@@ -15,11 +16,13 @@ using namespace std;
 
 TEST( AllTest, ConstructorTest )
 {
-	const char* keyFileName = "keyFile";
-	const char* dataFileName = "dataFile";
+	const string &keyFileName = "keyFile";
+    const string &dataFileName = "dataFile";
     SimpleDB simpleDB( keyFileName, dataFileName );
-    ifstream file(keyFileName);
-    ifstream file1(dataFileName);
+    const char* keyF = keyFileName.c_str();
+    const char* dataF = dataFileName.c_str();
+    ifstream file(keyF);
+    ifstream file1(dataF);
   
     ASSERT_TRUE(file);
     ASSERT_TRUE(file1);
@@ -28,19 +31,21 @@ TEST( AllTest, ConstructorTest )
 /*
  * Tests the create function, to see if creating a new database works.
  */
+/**
 TEST( AllTest, CreateTest )
 {
     const char* db = "TestDataBase";
     const char* user = "TestUserName";
     const char* password = "TestPassword";
-    const char* keyFileName = "keyFile";
-	const char* dataBaseFile = "dataFile";
+    const string &keyFileName = "keyFile";
+	const string &dataBaseFile = "dataFile";
     const int shift = 4;
 	string correct = "TestDataBase TestUserName TestPassword 4"; 
 
     SimpleDB simpleDB(keyFileName, dataBaseFile);
     simpleDB.create( db, user, password, shift );
-                  
+    simpleDB.connect( db, user, password );
+ 
     string buffer;
     ifstream file;
     file.open( keyFileName, ios::in );
@@ -48,7 +53,7 @@ TEST( AllTest, CreateTest )
             
     ASSERT_EQ( correct, buffer );
 }
-
+*/
 /*
  * Attempts to connect to the database after it has been declared
  * If it works, will return true; else false
@@ -59,8 +64,8 @@ TEST( AllTest, ConnectTest )
     const char* db = "TestDataBase";
     const char* user = "TestUserName";
     const char* password = "TestPassword";
-    const char* keyFileName = "keyFile";
-    const char* dataBaseFile = "dataFile";
+    const string &keyFileName = "keyFile";
+    const string &dataBaseFile = "dataFile";
     const int shift = 4;
  
     SimpleDB simpleDB( keyFileName, dataBaseFile );
@@ -79,20 +84,19 @@ TEST( AllTest, ConnectTest )
  */
 TEST( AllTest, InsertTest )
 {
-    const char* key = "This is a key";
+    const char* key = "key";
     const char* value = "value";
-   	const char* db = "TestDataBase";
-    const char* user = "TestUserName";
-    const char* password = "TestPassword";
-    const char* keyFileName = "keyFile";
-	const char* dataBaseFile = "dataFile";
+   	const char* db = "Base1";
+    const char* user = "Name1";
+    const char* password = "Password1";
+    const string &keyFileName = "keyFile";
+	const string &dataBaseFile = "dataFile";
 	
     const int shift = 4;
     SimpleDB simpleDB( keyFileName, dataBaseFile );
     simpleDB.create( db, user, password, shift );
     simpleDB.connect( db, user, password);
-    ASSERT_TRUE( simpleDB.insert( key, value ) );
-    simpleDB.close();
+    ASSERT_TRUE( simpleDB.insert( key, value ) );    
 }
 
 
@@ -160,7 +164,7 @@ TEST( AllTest, RemoveAllKeysTest )
 	SimpleDB simpleDB( keyFileName, dataBaseFile );
     simpleDB.connect( db, user, password);
     simpleDB.create( db, user, password, shift );
-    simpleDB.insert( key, value );
+    //simpleDB.insert( key, value );
     ASSERT_TRUE( simpleDB.removeKey( key ) );
     simpleDB.close();
 }
@@ -183,7 +187,7 @@ TEST( AllTest, KeyExistsTest )
     SimpleDB simpleDB( keyFileName, dataBaseFile );
     simpleDB.connect( db, user, password );
     simpleDB.create( db, user, password, shift );
-    simpleDB.insert( key, value );
+    //simpleDB.insert( key, value );
             
     ASSERT_TRUE( simpleDB.keyExists( key ) );
     simpleDB.close();
@@ -231,7 +235,7 @@ TEST( AllTest, SelectTest)
     SimpleDB simpleDB( keyFileName, dataBaseFile );
     simpleDB.connect( db, user, password );
     simpleDB.create( db, user, password, shift );
-    simpleDB.insert( key, value );
+    //simpleDB.insert( key, value );
     
     ASSERT_EQ( key, simpleDB.select( key ) );
     simpleDB.close();
@@ -257,6 +261,7 @@ TEST( AllTest, UpdateTest )
     SimpleDB simpleDB( keyFileName, dataBaseFile );
     simpleDB.connect( db, user, password );
     simpleDB.create( db, user, password, shift );
+    //simpleDB.insert( key, value );
     
     ASSERT_TRUE( simpleDB.update( keyTest, valueTest ) );
     simpleDB.close();
@@ -336,6 +341,7 @@ TEST( AllTest, KeyGetSetLenTest )
     key.setLength( 5 );
     ASSERT_EQ( 5, key.getLength() );
 }
+
  
 /**
  * Checks the mergesortcompare by ASCII function
@@ -355,6 +361,18 @@ TEST( AllTest, MergeSortCompare )
    const char* key6 = "a";
    ASSERT_EQ( 0, compareASCII( key5, key6 ) );
 }
-
+/**
+TEST( AllTest, BinarySortTest)
+{
+   std::vector<Key*> keyVector;
+   keyVector.push_back( new Key( "Hello", 0, 5 ));
+   keyVector.push_back( new Key( "Goodbay", 10, 5) );
+   keyVector.push_back( new Key( "Zi", 25, 25 ) );
+   
+   std::vector<Key*> temp;
+   mergeSort( keyVector, temp, 0, 2 );
+   ASSERT_EQ( 1, binarySearch( keyVector, "Hello" ) );
+} 
+*/
  
 
