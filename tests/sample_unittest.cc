@@ -231,4 +231,48 @@ TEST( SimpleDB, UpdateTest )
     
     ASSERT_TRUE( simpleDB.update( key, value ) );
 }
+
+TEST( Key, KeyGetTest)
+{
+    string keyName = "key";
+    int pos = 1;
+    int length = 3;
+    Key key( keyName, pos, length );
+    ASSERT_EQ( keyName, key.getKey() );
+}
+
+TEST( Key, KeySetTest)
+{
+    string keyName = "key";
+    string keyNewName = "key2";
+    int pos = 1;
+    int length = 3;
+    Key key( keyName, pos, length );
+    key.setKey( keyNewName );
+    ASSERT_EQ( keyNewName, key.getKey() ); 
+}
+
+TEST( Key, KeyGetSetPosTest )
+{
+    string keyName = "key";
+    int pos =1;
+    int length = 3;
+    Key key( keyName, pos, length );
+    ASSERT_EQ( pos, key.getPos() );
+    
+    key.setPos( 5 );
+    ASSERT_EQ( 5, key.getPos() );
+}
+
+TEST( Key, KeyGetSetLenTest )
+{
+    string keyName = "key";
+    int pos = 1;
+    int length = 3;
+    Key key( keyName, pos, length );
+    ASSERT_EQ( length, key.getLength() );
+    
+    key.setLength( 5 );
+    ASSERT_EQ( 5, key.getLength() );
+}
  
