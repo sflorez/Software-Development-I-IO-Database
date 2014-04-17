@@ -1,4 +1,5 @@
 //Comments for the class functions are within the .h file.
+//changed this
 #include "SimpleDB.h"
 #include "Algorithm.h"
 #include "mergeSort.h"
@@ -124,6 +125,7 @@ void SimpleDB::connect(const char* db, const char* user, const char* password)
 			else
 			{
 				cout << "Incorrect username or password" << endl;
+				throw userPassException("Invalid UserName or Password");
 				break;
 			}
 
@@ -131,6 +133,7 @@ void SimpleDB::connect(const char* db, const char* user, const char* password)
 		else
 		{
 			cout << "searching for database" << endl;
+
 		}
 	}
 

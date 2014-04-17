@@ -11,54 +11,53 @@
  * it will then return what they want otherwise throw an exception error
  */
 #include <iostream>
+#include "DBException.h"
 #include "SimpleDB.h"
 #include <string>
 using namespace std;
 
 int main()
 {
-	    const string &key = "keyFile";
-	    const string &database = "DataFile";
-	    const char* dataBaseName;
+        const string &key = "keyFile";
+        const string &database = "DataFile";
+        const char* dataBaseName;
         const char* searchFor;
-	    const char* dataBaseUser;
-	    const char* dataBasePass;
-	    const char* keyName;
-	    const char* value;
-	    string tempdataKey;
+        const char* dataBaseUser;
+        const char* dataBasePass;
+        const char* keyName;
+        const char* value;
         const char* dataKey;
-        string tempUpdateKey;
-        string tempUpdateValue;
+        string tempUpdateKey, tempUpdateValue, tempdataKey;
         const char* updateKey;
         string erase;
         const char* toErase;
         const char* updateValue;
-        string tempKeyName;
-	    string tempValueName;
-	    string tempName, tempUser, tempPass;
-	    string search = "";
+        string tempKeyName, tempValueName;
+        string tempName, tempUser, tempPass;
+        string search = "";
         int shift;
         int userChoice = 0;
         int DBC = 0; // data base choice number
 
         SimpleDB simpleDB(key,database);
-	    cout << "\nTo create a database press 1, to open an old database press 2\n" << endl;
+        cout << "\nTo create a database press 1, to open an old database press 2\n" << endl;
         cin >> DBC;
 
         if(DBC == 1)
         {
             cout << "\nEnter the name of your new data base.\n" << endl;
-            cin >> tempName;
-            cout << "\nEnter a user name to access the same database for the future.\n" << endl;
+
+            cin >> tempName; cout << "\nEnter a user name to access the same database for the future.\n" << endl;
             cin >> tempUser;
             cout << "\nEnter a password to go with that username\n" << endl;
             cin >> tempPass;
             cout << "\nEnter a shift for the encryption\n" << endl;
             cin >> shift;
             dataBaseName = tempName.c_str();
-	        dataBaseUser = tempUser.c_str();
-	        dataBasePass = tempPass.c_str();
+            dataBaseUser = tempUser.c_str();
+            dataBasePass = tempPass.c_str();
             simpleDB.create(dataBaseName, dataBaseUser, dataBasePass, shift);
+            simpleDB.connect(dataBaseName, dataBaseUser, dataBasePass);
         }
 
         else if(DBC == 2)
@@ -70,9 +69,18 @@ int main()
             cout << "\nEnter the password that goes with it.\n" << endl;
             cin >> tempPass;
             dataBaseName = tempName.c_str();
-	        dataBaseUser = tempUser.c_str();
-	        dataBasePass = tempPass.c_str();
+            dataBaseUser = tempUser.c_str();
+            dataBasePass = tempPass.c_str();
             simpleDB.connect(dataBaseName, dataBaseUser, dataBasePass);
+            try
+            {
+                simpleDB.connect(dataBaseName, dataBaseUser, dataBasePass);
+            }
+            catch(const string userPassException & e)
+            {
+                cout << e.getErrorMessage  << endl;
+            }
+
         }
 
         else
@@ -135,8 +143,7 @@ int main()
                     break;
                 case 5:
                     cout<< "\ncase 5 to remove data\n";
-                    cin >> erase;
-                    toErase = erase.c_str();
+                    cin >> erase;toErase = erase.c_str();
                     if(simpleDB.removeKey(toErase))
                     {
                         cout << "\nKey Removed\n" << endl;
@@ -162,8 +169,8 @@ int main()
                         cout << "\nEnter a shift for the encryption\n" << endl;
                         cin >> shift;
                         dataBaseName = tempName.c_str();
-	                    dataBaseUser = tempUser.c_str();
-	                    dataBasePass = tempPass.c_str();
+                        dataBaseUser = tempUser.c_str();
+                        dataBasePass = tempPass.c_str();
                         simpleDB.create(dataBaseName, dataBaseUser, dataBasePass, shift);
                      }
 
@@ -176,8 +183,8 @@ int main()
                          cout << "\nEnter the password that goes with it.\n" << endl;
                          cin >> tempPass;
                          dataBaseName = tempName.c_str();
-	                     dataBaseUser = tempUser.c_str();
-	                     dataBasePass = tempPass.c_str();
+                         dataBaseUser = tempUser.c_str();
+                         dataBasePass = tempPass.c_str();
                          simpleDB.connect(dataBaseName, dataBaseUser, dataBasePass);
                      }
                     break;
@@ -185,5 +192,5 @@ int main()
                     cout << "\nBye!\n\n";
             }
         }while(userChoice != 7);
-	    return 0;
+        return 0;
 }
