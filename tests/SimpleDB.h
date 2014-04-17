@@ -27,6 +27,7 @@ class SimpleDB
 	int keysInVect;
 
     public:
+        bool getConnect();
         /**
          * Minimum and maximum length of key and value strings,
          * including '\0' terminator.
