@@ -38,6 +38,7 @@ int main()
         int shift;
         int userChoice = 0;
         int DBC = 0; // data base choice number
+        bool DBCheck = true;
 
         SimpleDB simpleDB(key,database);
         cout << "\nTo create a database press 1, to open an old database press 2\n" << endl;
@@ -56,8 +57,18 @@ int main()
             dataBaseName = tempName.c_str();
             dataBaseUser = tempUser.c_str();
             dataBasePass = tempPass.c_str();
-            simpleDB.create(dataBaseName, dataBaseUser, dataBasePass, shift);
+             try
+            {
+                simpleDB.create(dataBaseName, dataBaseUser, dataBasePass, shift);
+            }
+            catch( const DBException & e)
+            {
+            	cout << e.getErrorMessage() << endl;
+                DBCheck = false;
+            }
+
             simpleDB.connect(dataBaseName, dataBaseUser, dataBasePass);
+
         }
 
         else if(DBC == 2)
@@ -78,6 +89,7 @@ int main()
             catch( const DBException & e)
             {
             	cout << e.getErrorMessage() << endl;
+                DBCheck = false;
             }
 
 
@@ -88,6 +100,8 @@ int main()
             cout << "\nInvalid Entry, Bye!\n" <<endl;
             return 0;
         }
+       if(DBCheck)
+       {
        do
        {
             cout << "\nChoose the following inputs for it's outcome\n"
@@ -192,5 +206,6 @@ int main()
                     cout << "\nBye!\n\n";
             }
         }while(userChoice != 7);
-        return 0;
+        }
+       return 0;
 }

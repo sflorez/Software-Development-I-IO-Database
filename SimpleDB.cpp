@@ -32,7 +32,6 @@ SimpleDB::SimpleDB( const string & keyFile , const string & dataFile)
 		}
 		else   //if the file was found, use existing file
 		{
-			cout << " file already exists: Using the existing keyfile" << endl;
 			keyFileInUse = keyFileName;
 		}
 
@@ -45,7 +44,6 @@ SimpleDB::SimpleDB( const string & keyFile , const string & dataFile)
 		}
 		else   //if the file was found, use existing file
 		{
-			cout << " file already exists: Using the existing datafile" << endl;
 			dataFileInUse = dataFileName;
 		}
 
@@ -79,7 +77,7 @@ void SimpleDB::create( const char* db, const char* user, const char* password, i
 		cout << dataBaseNames[i] << endl;
 		if( dataBaseNames[i] == db)
 		{
-			cout << " database already created" << endl;
+		    throw DBException("Database already created!");
 			canCreate = false;
 			break;
 		}
@@ -159,14 +157,14 @@ void SimpleDB::connect(const char* db, const char* user, const char* password)
 			}
 			else
 			{
-				throw DBException(" you done messed up");
+				throw DBException("Invalid Username or Password");
 				break;
 			}
 
 		}
 		else
 		{
-			cout << "searching for database" << endl;
+			throw DBException("Database not found");
 		}
 	}
 
@@ -257,7 +255,7 @@ const char* SimpleDB::select(const char* key)
 	//first looks for the existance of the key.
 	if(binarySearch( theKeys, key)==-1)
 	{
-		cout << "key not found" << endl;
+        throw DBException("Key not Found");// add in main.cpp
 		return NULL;
 	}
 	else
