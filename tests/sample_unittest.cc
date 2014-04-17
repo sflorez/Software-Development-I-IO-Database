@@ -9,11 +9,10 @@
 #include "mergeSort.h"
 #include "gtest/gtest.h"
 using namespace std;
- 
-/*
- * Tests the SimpleDB constructor to make sure that it creates the files
- */
 
+/* 
+ * Tests the SimpleDB constructor to make sure that it creates the files
+*/
 TEST( AllTest, ConstructorTest )
 {
 	const string &keyFileName = "keyFile";
@@ -30,8 +29,7 @@ TEST( AllTest, ConstructorTest )
 
 /*
  * Tests the create function, to see if creating a new database works.
- */
-/**
+ *
 TEST( AllTest, CreateTest )
 {
     const char* db = "TestDataBase";
@@ -58,7 +56,6 @@ TEST( AllTest, CreateTest )
  * Attempts to connect to the database after it has been declared
  * If it works, will return true; else false
  */
-
 TEST( AllTest, ConnectTest )
 {
     const char* db = "TestDataBase";
@@ -77,11 +74,10 @@ TEST( AllTest, ConnectTest )
     simpleDB.close();
 }
 
-
 /*
  * Tests to make sure the insert function
  * Inserted something into the file
- */
+
 TEST( AllTest, InsertTest )
 {
     const char* key = "key";
@@ -98,11 +94,8 @@ TEST( AllTest, InsertTest )
     simpleDB.connect( db, user, password);
     ASSERT_TRUE( simpleDB.insert( key, value ) );    
 }
+*/
 
-
-/*
- * Tests Encryption to passes with correct inputs
- */
 TEST( AllTest, EncryptTest )
 {
     char* data = new char[4];
@@ -146,10 +139,10 @@ TEST( AllTest, DecryptionAsciiBounds )
     ASSERT_FALSE( Algorithm::encrypt( data, shift ) );
 }
 
-/**
+/*
  * Attemps to remove the key that was just inserted into
  * the code
- */
+
 TEST( AllTest, RemoveAllKeysTest )
 {
     const char* key = "key";
@@ -168,11 +161,11 @@ TEST( AllTest, RemoveAllKeysTest )
     ASSERT_TRUE( simpleDB.removeKey( key ) );
     simpleDB.close();
 }
-
-/**
+*/
+/*
  * Makes sure the key that was just created,
  * is in the SimpleDB
- */
+ 
 TEST( AllTest, KeyExistsTest )
 {
     const char* key = "key";
@@ -192,8 +185,8 @@ TEST( AllTest, KeyExistsTest )
     ASSERT_TRUE( simpleDB.keyExists( key ) );
     simpleDB.close();
 }
-
-/**
+*/
+/*
  * Makes sure the file is closed and you
  * are disconnected from the database
  */
@@ -218,9 +211,9 @@ TEST( AllTest, CloseTest )
     ASSERT_FALSE( simpleDB.getConnect() );
 }
 
-/**
+/*
  * Checks if you can select the key that was just entered
- */
+
 TEST( AllTest, SelectTest)
 {
     const char* key = "key";
@@ -241,10 +234,10 @@ TEST( AllTest, SelectTest)
     simpleDB.close();
     
 }
-
-/**
+*/
+/*
  * Attemps to update the key that was just entered
- */
+
 TEST( AllTest, UpdateTest )
 {
     const char* key = "key";
@@ -266,10 +259,10 @@ TEST( AllTest, UpdateTest )
     ASSERT_TRUE( simpleDB.update( keyTest, valueTest ) );
     simpleDB.close();
 }
-
-/**
+*/
+/*
  * Checks that error message of the test
- */
+*/
 TEST( AllTest, errorMessageTest )
 {
     const char* keyFileName = "keyFile";
@@ -279,11 +272,10 @@ TEST( AllTest, errorMessageTest )
     ASSERT_EQ( message, simpleDB.errorMessage() );
 }
   
-
-/**
+/*
  * Checks the getKey function in the key.cpp
  * by inserting a new key, and getting it.
- */
+*/
 TEST( AllTest, KeyGetTest)
 {
     string keyName = "key";
@@ -293,11 +285,10 @@ TEST( AllTest, KeyGetTest)
     ASSERT_EQ( keyName, key.getKey() );
 }
 
-
-/**
+/*
  * Checks if the key really set,
  * by calling the get
- */
+*/
 TEST( AllTest, KeySetTest)
 {
     string keyName = "key";
@@ -309,12 +300,10 @@ TEST( AllTest, KeySetTest)
     ASSERT_EQ( keyNewName, key.getKey() ); 
 }
 
-
-/**
+/*
  * Checks the key get and set postition functions
- * in the key.cpp
  */
-TEST( AllTest, KeyGetSetPosTest )
+TEST( AllTest, KeyPosTest )
 {
     string keyName = "key";
     int pos =1;
@@ -326,10 +315,9 @@ TEST( AllTest, KeyGetSetPosTest )
     ASSERT_EQ( 5, key.getPos() );
 }
 
-/**
- * Checks the key get and set length functions
- * in the key.cpp
- */
+/*
+ Checks the key get and set length functions
+*/
 TEST( AllTest, KeyGetSetLenTest )
 {
     string keyName = "key";
@@ -341,12 +329,10 @@ TEST( AllTest, KeyGetSetLenTest )
     key.setLength( 5 );
     ASSERT_EQ( 5, key.getLength() );
 }
-
  
-/**
- * Checks the mergesortcompare by ASCII function
+/* Checks the mergesortcompare by ASCII function
  * in merge sort
- */
+*/
 TEST( AllTest, MergeSortCompare )
 {
    const char* key1 = "a";
@@ -361,18 +347,31 @@ TEST( AllTest, MergeSortCompare )
    const char* key6 = "a";
    ASSERT_EQ( 0, compareASCII( key5, key6 ) );
 }
-/**
+
 TEST( AllTest, BinarySortTest)
 {
    std::vector<Key*> keyVector;
    keyVector.push_back( new Key( "Hello", 0, 5 ));
    keyVector.push_back( new Key( "Goodbay", 10, 5) );
    keyVector.push_back( new Key( "Zi", 25, 25 ) );
-   
+	
    std::vector<Key*> temp;
-   mergeSort( keyVector, temp, 0, 2 );
+   temp.resize(5);
+   mergeSort( keyVector, temp, 0, keyVector.size() - 1 );
    ASSERT_EQ( 1, binarySearch( keyVector, "Hello" ) );
 } 
-*/
  
+TEST( AllTest, MergeSortLoc )
+{
+		std::vector<Key*> keyVector;
+		keyVector.push_back( new Key( "Goodbay", 10, 5));
+		keyVector.push_back( new Key( "Zi", 25, 25));
+		keyVector.push_back( new Key( "Hello", 0, 5));
+
+		std::vector<Key*> temp;
+		temp.resize(5);
+
+		mergeSortLoc( keyVector, temp, 0, keyVector.size() -1 );
+		ASSERT_EQ( 10, keyVector[1]->getPos());
+}
 
