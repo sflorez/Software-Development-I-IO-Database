@@ -24,6 +24,7 @@ class SimpleDB
 	const char* dataBaseInUse;
 	bool connected;
 	std::vector<Key*> theKeys;
+	std::vector<std::string> dataBaseNames;
 	int keysInVect;
 
     public:
