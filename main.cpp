@@ -71,15 +71,15 @@ int main()
             dataBaseName = tempName.c_str();
             dataBaseUser = tempUser.c_str();
             dataBasePass = tempPass.c_str();
-            simpleDB.connect(dataBaseName, dataBaseUser, dataBasePass);
             try
             {
-                simpleDB.connect(dataBaseName, dataBaseUser, dataBasePass);
+            	simpleDB.connect(dataBaseName, dataBaseUser, dataBasePass);
             }
-            catch(const string userPassException & e)
+            catch( const DBException & e)
             {
-                cout << e.getErrorMessage  << endl;
+            	cout << e.getErrorMessage() << endl;
             }
+
 
         }
 

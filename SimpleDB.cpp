@@ -1,8 +1,8 @@
 //Comments for the class functions are within the .h file.
-//changed this
 #include "SimpleDB.h"
 #include "Algorithm.h"
 #include "mergeSort.h"
+#include "DBException.h"
 
 using namespace std;
 
@@ -55,14 +55,49 @@ SimpleDB::~SimpleDB(){}
 
 void SimpleDB::create( const char* db, const char* user, const char* password, int shift)
 {
+
 	int numKeys = 0;
-
+	bool canCreate = true;
 	ofstream myDataBase;
+	fstream namesofdb( "dataBases" , ios::out| ios::in);
+	string inbuf;
 
+	while(!namesofdb.eof())
+	{
+		namesofdb >> inbuf;
+		if(inbuf == "")
+		{
+			break;
+		}
+		dataBaseNames.push_back(inbuf);
+	}
+
+	namesofdb.close();
+
+	for( int i = 0 ; i < dataBaseNames.size() ; i ++)
+	{
+		cout << dataBaseNames[i] << endl;
+		if( dataBaseNames[i] == db)
+		{
+			cout << " database already created" << endl;
+			canCreate = false;
+			break;
+		}
+		else
+		{
+			cout<< "can create" << endl;
+			canCreate = true;
+		}
+	}
 	//creates a new database with entered db name, username and password
-	myDataBase.open( keyFileInUse, ios:: out | ios:: in | ios:: app);
-	myDataBase << db << " " <<  user << " " <<  password << " " <<  shift << endl;
-	myDataBase << numKeys << endl;
+	if(canCreate)
+	{
+		myDataBase.open( keyFileInUse, ios:: out | ios:: in | ios:: app);
+		ofstream myDataBases( "dataBases" , ios::out | ios::app);
+		myDataBase << db << " " <<  user << " " <<  password << " " <<  shift << endl;
+		myDataBase << numKeys << endl;
+		myDataBases << db << endl;
+	}
 
 	myDataBase.close();
 }
@@ -124,8 +159,7 @@ void SimpleDB::connect(const char* db, const char* user, const char* password)
 			}
 			else
 			{
-				cout << "Incorrect username or password" << endl;
-				throw userPassException("Invalid UserName or Password");
+				throw DBException(" you done messed up");
 				break;
 			}
 
@@ -133,7 +167,6 @@ void SimpleDB::connect(const char* db, const char* user, const char* password)
 		else
 		{
 			cout << "searching for database" << endl;
-
 		}
 	}
 
